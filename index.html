@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>천상 사주</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Hahmlet:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -18,8 +18,8 @@
   --gold-glow:rgba(255,255,255,.1);
   --gold-dim:rgba(255,255,255,.06);
   --w:#FFFFFF;
-  --g1:#888888;
-  --g2:#555555;
+  --g1:#AAAAAA;
+  --g2:#777777;
   --wood:#4ADE80;
   --fire:#F87171;
   --earth:#FBBF24;
@@ -67,23 +67,24 @@ body::after{
 }
 .badge{
   display:flex;align-items:center;gap:7px;
-  font-size:.58rem;color:rgba(255,255,255,.3);
+  font-size:.58rem;color:rgba(255,255,255,.55);
   letter-spacing:.2em;text-transform:uppercase;
 }
 .badge-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5);animation:pulse 3s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
-.badge-num{font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.12em}
+.badge-num{font-size:.58rem;color:rgba(255,255,255,.4);letter-spacing:.12em}
 .home-title{
-  font-size:3.4rem;font-weight:800;
-  line-height:1.0;letter-spacing:-.04em;
-  padding:32px 0 6px;
+  font-family:'Hahmlet',serif;
+  font-size:3.6rem;font-weight:700;
+  line-height:1.05;letter-spacing:-.01em;
+  padding:28px 0 6px;
   border-bottom:1px solid rgba(255,255,255,.06);
   margin-bottom:0;
 }
-.home-title .light{font-weight:300;color:rgba(255,255,255,.45);font-size:2.6rem}
+.home-title .light{font-weight:300;color:rgba(255,255,255,.5);display:block;font-size:1.1rem;letter-spacing:.15em;margin-bottom:8px;font-family:'Noto Sans KR',sans-serif}
 .home-title span{color:var(--gold)}
 .home-sub{
-  font-size:.75rem;color:var(--g2);font-weight:300;
+  font-size:.78rem;color:rgba(255,255,255,.5);font-weight:300;
   line-height:1.8;padding:16px 0 22px;
   border-bottom:1px solid rgba(255,255,255,.06);
   margin-bottom:0;
@@ -147,8 +148,8 @@ body::after{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   z-index:2;position:relative;
 }
-.sphere-text-ko{font-size:.55rem;color:rgba(255,255,255,.4);letter-spacing:.3em;font-weight:300}
-.sphere-text-hj{font-size:.48rem;color:rgba(255,255,255,.2);margin-top:2px;letter-spacing:.15em}
+.sphere-text-ko{font-size:.55rem;color:rgba(255,255,255,.6);letter-spacing:.3em;font-weight:300}
+.sphere-text-hj{font-size:.48rem;color:rgba(255,255,255,.35);margin-top:2px;letter-spacing:.15em}
 .starburst{
   position:absolute;top:-8px;right:4px;
   width:44px;height:44px;z-index:3;
@@ -213,7 +214,7 @@ body::after{
   padding:0;
 }
 .form-label-top{
-  font-size:.55rem;font-weight:400;color:rgba(255,255,255,.25);
+  font-size:.55rem;font-weight:400;color:rgba(255,255,255,.5);
   letter-spacing:.25em;text-transform:uppercase;
   margin-bottom:20px;
   display:flex;align-items:center;justify-content:space-between;
@@ -223,7 +224,7 @@ body::after{
 .form-label-top::after{content:'↓';color:rgba(255,255,255,.2);font-size:.75rem}
 .field{margin-bottom:0;border-bottom:1px solid rgba(255,255,255,.06);padding:16px 0}
 .field>label{
-  display:block;font-size:.55rem;color:rgba(255,255,255,.22);
+  display:block;font-size:.55rem;color:rgba(255,255,255,.45);
   font-weight:300;margin-bottom:8px;letter-spacing:.2em;text-transform:uppercase;
 }
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -242,7 +243,7 @@ input:focus,textarea:focus{border-bottom-color:var(--gold)}
 .sx{
   padding:14px;background:transparent;
   border:1px solid rgba(255,255,255,.08);border-radius:0;
-  color:rgba(255,255,255,.3);font-family:inherit;font-size:.8rem;font-weight:300;
+  color:rgba(255,255,255,.55);font-family:inherit;font-size:.8rem;font-weight:300;
   cursor:pointer;transition:all .2s;letter-spacing:.1em;
 }
 .sx.on{border-color:rgba(255,255,255,.5);color:rgba(255,255,255,.9);background:rgba(255,255,255,.05)}
@@ -464,7 +465,7 @@ input:focus,textarea:focus{border-bottom-color:var(--gold)}
       <div class="badge"><span class="badge-dot"></span>천상열차분야지도</div>
       <div class="badge-num">사주 · 운명</div>
     </div>
-    <div class="home-title"><span class="light">별이</span><br>기억한<br><span>운명</span></div>
+    <div class="home-title"><span class="light">사주팔자</span>별이 기억한<br><span>운명</span></div>
     <div class="home-sub">생년월일시로 보는 사주팔자<br>천년의 지혜가 오늘의 방향을 알려드립니다</div>
   </div>
 
