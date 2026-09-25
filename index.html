@@ -47,34 +47,48 @@ body::before{
 
 /* ── HOME ── */
 .home-top{
-  padding:56px 24px 0;
-  text-align:center;
+  padding:52px 24px 0;
+}
+.home-rule{
+  width:100%;height:1px;background:var(--b2);margin:0;
+}
+.home-header-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 0 16px;
+  border-bottom:1px solid var(--b);
 }
 .badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:6px 14px;border-radius:100px;
-  border:1px solid var(--b2);
-  background:var(--gold-dim);
-  font-size:.68rem;color:var(--gold);
-  letter-spacing:.12em;margin-bottom:24px;
+  display:flex;align-items:center;gap:7px;
+  font-size:.6rem;color:var(--g2);
+  letter-spacing:.15em;text-transform:uppercase;
 }
-.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.badge-num{font-size:.6rem;color:var(--g2);letter-spacing:.1em}
 .home-title{
-  font-size:2.4rem;font-weight:700;
-  line-height:1.15;letter-spacing:-.01em;
-  margin-bottom:10px;
+  font-size:3rem;font-weight:900;
+  line-height:1.05;letter-spacing:-.03em;
+  padding:28px 0 8px;
+  border-bottom:1px solid var(--b);
+  margin-bottom:0;
 }
 .home-title span{color:var(--gold)}
-.home-sub{font-size:.85rem;color:var(--g1);font-weight:300;line-height:1.6;margin-bottom:36px}
+.home-sub{
+  font-size:.78rem;color:var(--g2);font-weight:400;
+  line-height:1.7;padding:14px 0 20px;
+  border-bottom:1px solid var(--b);
+  margin-bottom:0;
+  letter-spacing:.01em;
+}
 
 /* Star circle */
 .star-ring-wrap{
   display:flex;justify-content:center;
-  padding:4px 0 36px;position:relative;
+  padding:28px 24px 0;position:relative;
 }
 .celestial-img{
-  width:260px;height:260px;
+  width:100%;max-width:320px;
+  aspect-ratio:1;
   border-radius:50%;
   object-fit:cover;
   display:block;
@@ -124,51 +138,55 @@ body::before{
 
 
 /* Form */
-.form-wrap{padding:0 20px}
+.form-wrap{padding:0 24px}
 .form-card{
-  background:var(--s1);
-  border:1px solid var(--b);
-  border-radius:20px;
-  padding:24px 20px;
+  background:transparent;
+  border:none;
+  padding:0;
 }
 .form-label-top{
-  font-size:.68rem;font-weight:500;color:var(--g1);
-  letter-spacing:.1em;margin-bottom:18px;
-  display:flex;align-items:center;gap:8px;
+  font-size:.58rem;font-weight:500;color:var(--g2);
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:20px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0 14px;
+  border-bottom:1px solid var(--b);
 }
-.form-label-top::before{content:'';width:3px;height:12px;background:var(--gold);border-radius:2px}
-.field{margin-bottom:16px}
+.form-label-top::after{content:'→';color:var(--gold);font-size:.8rem}
+.field{margin-bottom:0;border-bottom:1px solid var(--b);padding:14px 0}
 .field>label{
-  display:block;font-size:.65rem;color:var(--g2);
-  font-weight:400;margin-bottom:6px;
+  display:block;font-size:.58rem;color:var(--g2);
+  font-weight:400;margin-bottom:8px;letter-spacing:.15em;text-transform:uppercase;
 }
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 input[type=date],input[type=time],input[type=text],input[type=password],select,textarea{
-  width:100%;padding:13px 15px;
-  background:var(--s2);
-  border:1px solid var(--b);
-  border-radius:12px;
-  color:var(--w);font-family:inherit;font-size:.9rem;
+  width:100%;padding:12px 0;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--b2);
+  border-radius:0;
+  color:var(--w);font-family:inherit;font-size:1rem;font-weight:500;
   outline:none;appearance:none;-webkit-appearance:none;
   transition:border-color .15s;resize:vertical;
 }
-input:focus,textarea:focus{border-color:rgba(242,200,75,.4)}
-.sex-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input:focus,textarea:focus{border-bottom-color:var(--gold)}
+.sex-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sx{
-  padding:12px;background:var(--s2);
-  border:1px solid var(--b);border-radius:12px;
-  color:var(--g1);font-family:inherit;font-size:.85rem;
-  cursor:pointer;transition:all .15s;
+  padding:13px;background:transparent;
+  border:1px solid var(--b);border-radius:0;
+  color:var(--g2);font-family:inherit;font-size:.82rem;
+  cursor:pointer;transition:all .15s;letter-spacing:.08em;
 }
-.sx.on{background:var(--gold-dim);border-color:rgba(242,200,75,.4);color:var(--gold);font-weight:600}
+.sx.on{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
 .go-btn{
-  width:100%;margin-top:16px;
-  padding:16px;
+  width:100%;margin-top:24px;
+  padding:18px;
   background:var(--gold);color:#07090E;
-  border:none;border-radius:14px;
-  font-family:inherit;font-size:.95rem;font-weight:700;
-  letter-spacing:.06em;cursor:pointer;
+  border:none;border-radius:0;
+  font-family:inherit;font-size:.85rem;font-weight:800;
+  letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
   transition:opacity .15s;
+  margin-bottom:40px;
 }
 .go-btn:active{opacity:.85}
 
@@ -374,9 +392,12 @@ input:focus,textarea:focus{border-color:rgba(242,200,75,.4)}
 <!-- HOME -->
 <div id="H" class="scr on">
   <div class="home-top">
-    <div class="badge"><span class="badge-dot"></span>천상열차분야지도</div>
-    <div class="home-title">별이 기억한<br><span>당신의 운명</span></div>
-    <div class="home-sub">생년월일시로 보는 사주팔자<br>천년의 지혜가 오늘의 방향을 알려드립니다</div>
+    <div class="home-header-row">
+      <div class="badge"><span class="badge-dot"></span>천상열차분야지도</div>
+      <div class="badge-num">사주 · 운명</div>
+    </div>
+    <div class="home-title">별이<br>기억한<br><span>운명</span></div>
+    <div class="home-sub">생년월일시로 보는 사주팔자 — 천년의 지혜가 오늘의 방향을 알려드립니다</div>
   </div>
 
   <!-- Star Map Image -->
