@@ -8,23 +8,23 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#070810;
-  --s1:#0E1020;
-  --s2:#161829;
-  --s3:#1E2135;
-  --b:rgba(255,255,255,.07);
-  --b2:rgba(255,255,255,.12);
-  --gold:#F2C84B;
-  --gold-glow:rgba(242,200,75,.18);
-  --gold-dim:rgba(242,200,75,.08);
+  --bg:#0C0C0C;
+  --s1:#141414;
+  --s2:#1C1C1C;
+  --s3:#242424;
+  --b:rgba(255,255,255,.08);
+  --b2:rgba(255,255,255,.16);
+  --gold:#FFFFFF;
+  --gold-glow:rgba(255,255,255,.1);
+  --gold-dim:rgba(255,255,255,.06);
   --w:#FFFFFF;
-  --g1:#9198B5;
-  --g2:#555E78;
-  --wood:#2ECC8A;
-  --fire:#FF5F60;
-  --earth:#F0A830;
-  --metal:#88B4FF;
-  --water:#5B8AFF;
+  --g1:#888888;
+  --g2:#555555;
+  --wood:#4ADE80;
+  --fire:#F87171;
+  --earth:#FBBF24;
+  --metal:#93C5FD;
+  --water:#60A5FA;
 }
 html,body{min-height:100%;overflow-x:hidden}
 body{
@@ -37,7 +37,7 @@ body{
 /* Ambient glow */
 body::before{
   content:'';position:fixed;inset:0;max-width:430px;margin:0 auto;
-  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(100,80,20,.18) 0%,transparent 70%);
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,255,255,.03) 0%,transparent 70%);
   pointer-events:none;z-index:0;
 }
 
@@ -181,7 +181,7 @@ input:focus,textarea:focus{border-bottom-color:var(--gold)}
 .go-btn{
   width:100%;margin-top:24px;
   padding:18px;
-  background:var(--gold);color:#07090E;
+  background:#FFFFFF;color:#0C0C0C;
   border:none;border-radius:0;
   font-family:inherit;font-size:.85rem;font-weight:800;
   letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
