@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>천상 사주</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0c2520;--card:#122e28;--border:#253d35;
+  --gold:#c9a84c;--gold2:#e8d08a;--cream:#d9c9a8;--dim:#6a8e80;
+  --wood:#5a9e6f;--fire:#c0392b;--earth:#c9a010;--metal:#7a94a8;--water:#2a7a9e;
+}
+html,body{min-height:100%;overflow-x:hidden}
+body{font-family:'Noto Serif KR',serif;background:var(--bg);color:var(--cream);max-width:430px;margin:0 auto;position:relative}
+
+/* Stars */
+body::before{
+  content:'';position:fixed;inset:0;max-width:430px;margin:0 auto;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 7% 11%,rgba(255,255,255,.7) 0,transparent 100%),
+    radial-gradient(1px 1px at 21% 4%,rgba(201,168,76,.5) 0,transparent 100%),
+    radial-gradient(1.5px 1.5px at 34% 17%,rgba(255,255,255,.6) 0,transparent 100%),
+    radial-gradient(1px 1px at 51% 8%,rgba(255,255,255,.35) 0,transparent 100%),
+    radial-gradient(1px 1px at 67% 14%,rgba(201,168,76,.55) 0,transparent 100%),
+    radial-gradient(1.5px 1.5px at 80% 6%,rgba(255,255,255,.7) 0,transparent 100%),
+    radial-gradient(1px 1px at 92% 21%,rgba(255,255,255,.4) 0,transparent 100%),
+    radial-gradient(1px 1px at 14% 34%,rgba(255,255,255,.25) 0,transparent 100%),
+    radial-gradient(1px 1px at 44% 42%,rgba(201,168,76,.25) 0,transparent 100%),
+    radial-gradient(1.5px 1.5px at 87% 33%,rgba(255,255,255,.45) 0,transparent 100%),
+    radial-gradient(1px 1px at 59% 58%,rgba(255,255,255,.18) 0,transparent 100%),
+    radial-gradient(1px 1px at 28% 73%,rgba(201,168,76,.2) 0,transparent 100%),
+    radial-gradient(1px 1px at 74% 69%,rgba(255,255,255,.22) 0,transparent 100%),
+    radial-gradient(1px 1px at 17% 83%,rgba(255,255,255,.18) 0,transparent 100%),
+    radial-gradient(1px 1px at 91% 79%,rgba(201,168,76,.35) 0,transparent 100%),
+    radial-gradient(1px 1px at 48% 88%,rgba(255,255,255,.25) 0,transparent 100%),
+    radial-gradient(1.5px 1.5px at 4% 56%,rgba(255,255,255,.35) 0,transparent 100%),
+    radial-gradient(1px 1px at 96% 51%,rgba(255,255,255,.28) 0,transparent 100%);
+}
+
+/* Screens */
+.screen{position:relative;z-index:1;display:none;min-height:100dvh;padding-bottom:48px}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-header{text-align:center;padding:44px 20px 18px}
+.ht{font-size:3rem;font-weight:700;color:var(--gold);letter-spacing:.35em;text-shadow:0 0 32px rgba(201,168,76,.45);line-height:1}
+.hs{font-size:.68rem;color:var(--dim);letter-spacing:.22em;margin-top:8px}
+.hline{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0}
+
+/* Star map SVG */
+.mapwrap{display:flex;justify-content:center;padding:8px 0 20px}
+
+/* Guardians */
+.guard{display:flex;justify-content:center;gap:28px;padding:0 0 20px}
+.gitem{text-align:center}
+.gkr{font-size:.58rem;color:var(--dim);letter-spacing:.1em;margin-top:3px}
+
+/* Form */
+.fwrap{padding:0 18px}
+.fcard{background:rgba(18,46,40,.85);border:1px solid var(--border);border-radius:16px;padding:22px 18px;backdrop-filter:blur(10px)}
+.ftitle{font-size:.65rem;color:var(--gold);letter-spacing:.2em;text-align:center;margin-bottom:18px}
+.fcol2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.frow{margin-bottom:14px}
+label{display:block;font-size:.6rem;color:var(--dim);letter-spacing:.12em;margin-bottom:5px}
+input[type=date],input[type=time],input[type=password],input[type=text],select,textarea{
+  width:100%;padding:11px 13px;
+  background:rgba(10,30,26,.7);border:1px solid var(--border);border-radius:10px;
+  color:var(--cream);font-family:inherit;font-size:.88rem;
+  appearance:none;-webkit-appearance:none;outline:none;
+  transition:border-color .2s;resize:vertical;
+}
+input:focus,textarea:focus{border-color:var(--gold)}
+.sexrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sbtn{padding:11px;background:rgba(10,30,26,.7);border:1px solid var(--border);border-radius:10px;color:var(--dim);font-family:inherit;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.08em}
+.sbtn.on{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
+.cbtn{width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,#8a6820,var(--gold),#8a6820);color:#0c2520;border:none;border-radius:12px;font-family:inherit;font-size:.92rem;font-weight:700;letter-spacing:.22em;cursor:pointer;transition:opacity .2s}
+.cbtn:active{opacity:.8}
+
+/* ── RESULT ── */
+.rhead{display:flex;align-items:center;padding:20px 18px 0;gap:12px}
+.bk{width:36px;height:36px;background:rgba(42,80,64,.5);border:1px solid var(--border);border-radius:8px;color:var(--gold);font-size:1rem;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rtw{flex:1}.rn{font-size:.88rem;color:var(--gold);letter-spacing:.08em}.rd{font-size:.65rem;color:var(--dim);margin-top:2px}
+
+/* Mini map */
+.minimap{display:flex;justify-content:center;padding:14px 0 6px}
+
+/* Pillars */
+.psec{padding:0 14px 14px}
+.slbl{font-size:.62rem;color:var(--gold);letter-spacing:.2em;text-align:center;margin-bottom:12px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.pcard{background:rgba(18,46,40,.85);border:1px solid var(--border);border-radius:11px;text-align:center;padding:13px 5px;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc,var(--gold));opacity:.7}
+.plbl{font-size:.55rem;color:var(--dim);letter-spacing:.04em;margin-bottom:8px}
+.pstem{font-size:1.7rem;line-height:1}
+.psko{font-size:.55rem;color:var(--dim);margin:2px 0 5px}
+.pdiv{width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 auto 5px}
+.pbr{font-size:1.7rem;line-height:1}
+.pbko{font-size:.55rem;color:var(--dim);margin-top:2px}
+.pdots{margin-top:6px}
+.pdot{display:inline-block;width:5px;height:5px;border-radius:50%;margin:0 1px}
+
+/* Info cards */
+.isec{padding:0 14px}
+.icard{background:rgba(18,46,40,.85);border:1px solid var(--border);border-radius:12px;padding:17px;margin-bottom:11px;backdrop-filter:blur(4px)}
+.ititle{font-size:.62rem;color:var(--gold);letter-spacing:.18em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ititle::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.ebrow{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.enm{width:22px;font-size:.72rem;font-weight:600;text-align:right}
+.eko{width:14px;font-size:.6rem;color:var(--dim)}
+.etr{flex:1;height:5px;background:rgba(42,80,64,.5);border-radius:3px;overflow:hidden}
+.efi{height:100%;border-radius:3px;transition:width .7s ease}
+.ecnt{font-size:.65rem;color:var(--dim);width:12px}
+.mdesc{font-size:.83rem;line-height:1.85;color:var(--cream)}
+.mstem{font-size:1.4rem;float:left;margin:0 9px 4px 0;line-height:1}
+
+/* 대운 */
+.lscroll{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.lscroll::-webkit-scrollbar{display:none}
+.litem{flex-shrink:0;width:52px;background:rgba(10,30,26,.7);border:1px solid var(--border);border-radius:9px;text-align:center;padding:9px 4px}
+.lage{font-size:.55rem;color:var(--dim);margin-bottom:5px}
+.lstm{font-size:1.1rem;line-height:1.15}
+.lbr{font-size:1.1rem;line-height:1.15}
+
+/* ── AI ANALYSIS ── */
+.aitabs{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:13px}
+.atab{flex:1;padding:10px;background:rgba(10,30,26,.5);color:var(--dim);font-family:inherit;font-size:.75rem;border:none;cursor:pointer;letter-spacing:.08em;transition:all .2s}
+.atab.on{background:rgba(201,168,76,.12);color:var(--gold)}
+.amode{display:flex;gap:6px;margin-bottom:12px}
+.amdbtn{flex:1;padding:8px 4px;background:rgba(10,30,26,.5);border:1px solid var(--border);border-radius:8px;color:var(--dim);font-family:inherit;font-size:.68rem;cursor:pointer;transition:all .2s;letter-spacing:.06em}
+.amdbtn.on{background:rgba(201,168,76,.1);border-color:var(--gold);color:var(--gold)}
+.apirow{position:relative;margin-bottom:12px}
+.apirow label{margin-bottom:5px}
+.apitoggle{position:absolute;right:10px;top:30px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:.75rem;padding:2px 4px}
+.airun{width:100%;padding:13px;background:linear-gradient(135deg,#1a5040,#2a7060,#1a5040);border:1px solid var(--gold);border-radius:11px;color:var(--gold);font-family:inherit;font-size:.85rem;letter-spacing:.18em;cursor:pointer;transition:all .2s}
+.airun:disabled{opacity:.4;cursor:not-allowed}
+.aout{margin-top:14px;background:rgba(10,30,26,.7);border:1px solid var(--border);border-radius:11px;padding:16px;min-height:60px;display:none}
+.aout.vis{display:block}
+.atext{font-size:.8rem;line-height:1.95;color:var(--cream);white-space:pre-wrap;word-break:break-word}
+.acursor{display:inline-block;width:2px;height:14px;background:var(--gold);animation:blink .7s infinite;margin-left:1px;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.aerr{color:#e57373;font-size:.78rem;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="H" class="screen on">
+  <div class="home-header">
+    <div class="ht">사주</div>
+    <div class="hs">天象 · 천상의 기록</div>
+    <div class="hline"></div>
+  </div>
+
+  <div class="mapwrap">
+    <svg width="250" height="250" viewBox="0 0 250 250" fill="none">
+      <circle cx="125" cy="125" r="119" stroke="#c9a84c" stroke-width=".5" opacity=".38"/>
+      <circle cx="125" cy="125" r="113" stroke="#c9a84c" stroke-width=".3" opacity=".22"/>
+      <!-- 28수 ticks -->
+      <g stroke="#c9a84c" stroke-width=".9" opacity=".45">
+        <line x1="125" y1="6" x2="125" y2="12"/><line x1="144.5" y1="6.8" x2="143.6" y2="12.7"/>
+        <line x1="163.2" y1="9.1" x2="161.4" y2="14.8"/><line x1="180.6" y1="13.5" x2="177.9" y2="18.9"/>
+        <line x1="196.2" y1="20.3" x2="192.7" y2="25.2"/><line x1="209.8" y1="29.4" x2="205.5" y2="33.7"/>
+        <line x1="221" y1="40.5" x2="216.1" y2="44.2"/><line x1="229.6" y1="53.3" x2="224.2" y2="56.2"/>
+        <line x1="235.4" y1="67.3" x2="229.6" y2="69.3"/><line x1="238.3" y1="82" x2="232.4" y2="83"/>
+        <line x1="238.3" y1="97" x2="232.4" y2="97"/><line x1="235.4" y1="112" x2="229.6" y2="110"/>
+        <line x1="229.6" y1="126.2" x2="224.2" y2="124.2"/><line x1="221" y1="139.5" x2="216.1" y2="135.8"/>
+        <line x1="125" y1="244" x2="125" y2="238"/><line x1="105.5" y1="243.2" x2="106.4" y2="237.3"/>
+        <line x1="86.8" y1="240.9" x2="88.6" y2="235.2"/><line x1="69.4" y1="236.5" x2="72.1" y2="231.1"/>
+        <line x1="53.8" y1="229.7" x2="57.3" y2="224.8"/><line x1="40.2" y1="220.6" x2="44.5" y2="216.3"/>
+        <line x1="29" y1="209.5" x2="33.9" y2="205.8"/><line x1="20.4" y1="196.7" x2="25.8" y2="193.8"/>
+        <line x1="14.6" y1="182.7" x2="20.4" y2="180.7"/><line x1="11.7" y1="168" x2="17.6" y2="167"/>
+        <line x1="11.7" y1="153" x2="17.6" y2="153"/><line x1="14.6" y1="138" x2="20.4" y2="140"/>
+        <line x1="20.4" y1="123.8" x2="25.8" y2="125.8"/><line x1="29" y1="110.5" x2="33.9" y2="114.2"/>
+      </g>
+      <text x="125" y="21" text-anchor="middle" fill="#c9a84c" font-size="7.5" font-family="Noto Serif KR" opacity=".75">북방 현무</text>
+      <text x="125" y="242" text-anchor="middle" fill="#c9a84c" font-size="7.5" font-family="Noto Serif KR" opacity=".75">남방 주작</text>
+      <text x="13" y="128" text-anchor="middle" fill="#c9a84c" font-size="7.5" font-family="Noto Serif KR" opacity=".75" transform="rotate(-90,13,128)">동방 청룡</text>
+      <text x="237" y="128" text-anchor="middle" fill="#c9a84c" font-size="7.5" font-family="Noto Serif KR" opacity=".75" transform="rotate(90,237,128)">서방 백호</text>
+      <!-- Rings -->
+      <circle cx="125" cy="125" r="90" stroke="#c9a84c" stroke-width=".4" opacity=".2"/>
+      <circle cx="125" cy="125" r="66" stroke="#c9a84c" stroke-width=".4" opacity=".15"/>
+      <circle cx="125" cy="125" r="40" stroke="#c9a84c" stroke-width=".6" stroke-dasharray="3 2" opacity=".35"/>
+      <text x="125" y="122" text-anchor="middle" fill="#c9a84c" font-size="6.5" opacity=".65">자미원</text>
+      <text x="125" y="131" text-anchor="middle" fill="#c9a84c" font-size="5.5" opacity=".45">紫微垣</text>
+      <!-- Cross -->
+      <line x1="125" y1="85" x2="125" y2="30" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="125" y1="165" x2="125" y2="220" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="85" y1="125" x2="30" y2="125" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="165" y1="125" x2="220" y2="125" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <!-- Outer stars -->
+      <g fill="white" opacity=".75">
+        <circle cx="52" cy="68" r="1.3"/><circle cx="67" cy="53" r=".9"/>
+        <circle cx="155" cy="44" r="1.3"/><circle cx="173" cy="58" r=".9"/>
+        <circle cx="204" cy="157" r="1.3"/><circle cx="192" cy="175" r=".9"/>
+        <circle cx="98" cy="205" r="1.3"/><circle cx="79" cy="192" r=".9"/>
+        <circle cx="40" cy="125" r="1.3"/><circle cx="210" cy="125" r="1.3"/>
+      </g>
+      <!-- Constellation stars -->
+      <g fill="#c9a84c" opacity=".65">
+        <circle cx="100" cy="90" r="1.7"/><circle cx="115" cy="78" r="1.1"/>
+        <circle cx="136" cy="76" r="1.7"/><circle cx="155" cy="88" r="1.1"/>
+        <circle cx="162" cy="105" r="1.7"/><circle cx="156" cy="122" r="1.1"/>
+        <circle cx="158" cy="155" r="1.7"/><circle cx="140" cy="166" r="1.1"/>
+        <circle cx="115" cy="166" r="1.7"/><circle cx="99" cy="154" r="1.1"/>
+        <circle cx="91" cy="137" r="1.7"/><circle cx="93" cy="110" r="1.1"/>
+      </g>
+      <!-- Lines -->
+      <g stroke="#c9a84c" stroke-width=".5" opacity=".3">
+        <line x1="100" y1="90" x2="115" y2="78"/><line x1="115" y1="78" x2="136" y2="76"/>
+        <line x1="136" y1="76" x2="155" y2="88"/><line x1="155" y1="88" x2="162" y2="105"/>
+        <line x1="162" y1="105" x2="156" y2="122"/><line x1="158" y1="155" x2="140" y2="166"/>
+        <line x1="140" y1="166" x2="115" y2="166"/><line x1="115" y1="166" x2="99" y2="154"/>
+        <line x1="99" y1="154" x2="91" y2="137"/><line x1="91" y1="137" x2="93" y2="110"/>
+        <line x1="93" y1="110" x2="100" y2="90"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Guardians -->
+  <div class="guard">
+    <div class="gitem"><div style="font-size:1.3rem;color:var(--water)">玄</div><div class="gkr">현무</div></div>
+    <div class="gitem"><div style="font-size:1.3rem;color:var(--wood)">靑</div><div class="gkr">청룡</div></div>
+    <div class="gitem"><div style="font-size:1.3rem;color:var(--fire)">朱</div><div class="gkr">주작</div></div>
+    <div class="gitem"><div style="font-size:1.3rem;color:var(--earth)">白</div><div class="gkr">백호</div></div>
+  </div>
+
+  <div class="fwrap">
+    <div class="fcard">
+      <div class="ftitle">생년월일시 입력</div>
+      <div class="fcol2">
+        <div class="frow"><label>생년월일</label><input type="date" id="bd" value="1990-01-01"></div>
+        <div class="frow"><label>출생시간</label><input type="time" id="bt" value="12:00"></div>
+      </div>
+      <div class="frow">
+        <label>성별</label>
+        <div class="sexrow">
+          <button class="sbtn on" id="mb" onclick="setSex('남')">남 ♂</button>
+          <button class="sbtn" id="fb" onclick="setSex('여')">여 ♀</button>
+        </div>
+      </div>
+      <button class="cbtn" onclick="calc()">천상에서 사주 보기</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="R" class="screen">
+  <div class="rhead">
+    <button class="bk" onclick="goH()">←</button>
+    <div class="rtw"><div class="rn" id="rn"></div><div class="rd" id="rd"></div></div>
+  </div>
+
+  <!-- Mini map -->
+  <div class="minimap">
+    <svg width="168" height="168" viewBox="0 0 168 168" fill="none">
+      <circle cx="84" cy="84" r="78" stroke="#c9a84c" stroke-width=".5" opacity=".35"/>
+      <circle cx="84" cy="84" r="72" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <circle cx="84" cy="84" r="50" stroke="#c9a84c" stroke-width=".3" opacity=".13"/>
+      <circle cx="84" cy="84" r="26" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2 2" opacity=".28"/>
+      <line x1="84" y1="58" x2="84" y2="6" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="84" y1="110" x2="84" y2="162" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="58" y1="84" x2="6" y2="84" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="110" y1="84" x2="162" y2="84" stroke="#c9a84c" stroke-width=".3" opacity=".18"/>
+      <line x1="84" y1="58" x2="84" y2="15" stroke="#c9a84c" stroke-width=".6" opacity=".45" stroke-dasharray="2 2"/>
+      <line x1="110" y1="84" x2="153" y2="84" stroke="#c9a84c" stroke-width=".6" opacity=".45" stroke-dasharray="2 2"/>
+      <line x1="84" y1="110" x2="84" y2="153" stroke="#c9a84c" stroke-width=".6" opacity=".45" stroke-dasharray="2 2"/>
+      <line x1="58" y1="84" x2="15" y2="84" stroke="#c9a84c" stroke-width=".6" opacity=".45" stroke-dasharray="2 2"/>
+      <circle id="mY" cx="84" cy="11" r="5" fill="#c9a84c" opacity=".85"/>
+      <circle id="mM" cx="157" cy="84" r="5" fill="#c9a84c" opacity=".85"/>
+      <circle id="mD" cx="84" cy="157" r="5" fill="#c9a84c" opacity=".85"/>
+      <circle id="mH" cx="11" cy="84" r="5" fill="#c9a84c" opacity=".85"/>
+      <text id="tY" x="84" y="8" text-anchor="middle" fill="#c9a84c" font-size="5" font-family="Noto Serif KR" opacity=".7">年</text>
+      <text id="tM" x="163" y="87" fill="#c9a84c" font-size="5" font-family="Noto Serif KR" opacity=".7">月</text>
+      <text id="tD" x="84" y="167" text-anchor="middle" fill="#c9a84c" font-size="5" font-family="Noto Serif KR" opacity=".7">日</text>
+      <text id="tH" x="5" y="87" fill="#c9a84c" font-size="5" font-family="Noto Serif KR" opacity=".7">時</text>
+      <g fill="#c9a84c" opacity=".4">
+        <circle cx="72" cy="74" r="1.1"/><circle cx="80" cy="68" r=".7"/><circle cx="91" cy="68" r="1.1"/>
+        <circle cx="99" cy="74" r=".7"/><circle cx="102" cy="83" r="1.1"/><circle cx="98" cy="93" r=".7"/>
+        <circle cx="90" cy="100" r="1.1"/><circle cx="79" cy="100" r=".7"/>
+        <circle cx="71" cy="94" r="1.1"/><circle cx="68" cy="83" r=".7"/>
+      </g>
+      <g stroke="#c9a84c" stroke-width=".4" opacity=".2">
+        <line x1="72" y1="74" x2="80" y2="68"/><line x1="80" y1="68" x2="91" y2="68"/>
+        <line x1="91" y1="68" x2="99" y2="74"/><line x1="99" y1="74" x2="102" y2="83"/>
+        <line x1="102" y1="83" x2="98" y2="93"/><line x1="98" y1="93" x2="90" y2="100"/>
+        <line x1="90" y1="100" x2="79" y2="100"/><line x1="79" y1="100" x2="71" y2="94"/>
+        <line x1="71" y1="94" x2="68" y2="83"/><line x1="68" y1="83" x2="72" y2="74"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Pillars -->
+  <div class="psec">
+    <div class="slbl">사주팔자 · 四柱八字</div>
+    <div class="pgrid" id="pg"></div>
+  </div>
+
+  <!-- Elements -->
+  <div class="isec">
+    <div class="icard">
+      <div class="ititle">오행 분포 · 五行</div>
+      <div id="eb"></div>
+    </div>
+    <div class="icard">
+      <div class="ititle">일간 · 日干</div>
+      <p class="mdesc"><span class="mstem" id="ms"></span><span id="md"></span></p>
+    </div>
+    <div class="icard">
+      <div class="ititle">대운 · 大運</div>
+      <div class="lscroll" id="lg"></div>
+    </div>
+
+    <!-- AI 분석 -->
+    <div class="icard">
+      <div class="ititle">AI 사주 분석</div>
+      <div class="aitabs">
+        <button class="atab on" id="tab0" onclick="setTab(0)">연애 코치</button>
+        <button class="atab" id="tab1" onclick="setTab(1)">종합 해석</button>
+      </div>
+      <!-- 연애 상태 (tab0) -->
+      <div id="t0">
+        <div class="frow"><label>현재 연애 상태</label>
+          <input type="text" id="rstatus" placeholder="솔로 / 썸 / 연애 중 / 재회 고민 등"></div>
+      </div>
+      <!-- 출력 모드 (tab1) -->
+      <div id="t1" style="display:none">
+        <div class="frow"><label>출력 모드</label>
+          <div class="amode">
+            <button class="amdbtn on" id="md0" onclick="setMode('QUICK')">QUICK</button>
+            <button class="amdbtn" id="md1" onclick="setMode('STANDARD')">STANDARD</button>
+            <button class="amdbtn" id="md2" onclick="setMode('DEEP')">DEEP</button>
+          </div>
+        </div>
+        <div class="frow"><label>관심 영역 (선택)</label>
+          <input type="text" id="concern" placeholder="재물 / 직업 / 연애 / 건강 등"></div>
+      </div>
+      <!-- API Key -->
+      <div class="apirow">
+        <label>Claude API Key</label>
+        <input type="password" id="apikey" placeholder="sk-ant-...">
+        <button class="apitoggle" onclick="toggleKey()">보기</button>
+      </div>
+      <button class="airun" id="aiBtn" onclick="runAI()">✦ 분석 시작</button>
+      <div class="aout" id="aout"><div class="atext" id="atxt"></div></div>
+      <div class="aerr" id="aerr"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──
+const S=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const SK=['갑','을','병','정','무','기','경','신','임','계'];
+const B=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const BK=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+const ELK=['목','화','토','금','수'],ELH=['木','火','土','金','水'];
+const ELCSS=['#5a9e6f','#c0392b','#c9a010','#7a94a8','#2a7a9e'];
+const SE=[0,0,1,1,2,2,3,3,4,4],BE=[4,2,0,0,2,1,1,2,3,3,2,4];
+const MDESC={
+'甲':'강직한 리더십의 갑목(甲木). 새벽을 여는 나무처럼 앞을 향해 나아가는 기상이 있습니다. 고집스럽지만 정의롭고, 큰 꿈을 실현하는 힘을 가졌습니다.',
+'乙':'부드러운 유연함의 을목(乙木). 바람에 휘어도 꺾이지 않는 풀처럼 끈질긴 생명력이 있습니다. 섬세하고 예술적이며 인간관계가 원만합니다.',
+'丙':'태양처럼 밝은 병화(丙火). 주변을 환히 밝히는 에너지가 있고 솔직하며 시원한 성격입니다. 카리스마와 추진력으로 많은 이들에게 인기가 있습니다.',
+'丁':'촛불 같은 따뜻함의 정화(丁火). 가까운 이를 깊이 감싸 안는 온화함이 있습니다. 직관력이 탁월하고 예의 바르며 헌신적입니다.',
+'戊':'산처럼 듬직한 무토(戊土). 모든 것을 받아들이는 포용력과 묵직한 안정감이 있습니다. 신뢰와 책임감으로 주변의 기둥이 됩니다.',
+'己':'대지처럼 세심한 기토(己土). 만물을 키우는 비옥한 기질로 사람을 잘 돌봅니다. 실용적이고 꼼꼼하며 현실 감각이 뛰어납니다.',
+'庚':'쇠처럼 단단한 경금(庚金). 원칙을 중시하고 강한 결단력을 가졌습니다. 정의감이 넘치고 추진력 있게 목표를 이루어 냅니다.',
+'辛':'보석처럼 빛나는 신금(辛金). 예리한 감수성과 아름다움을 추구하는 미적 감각이 있습니다. 완벽을 향한 열정과 섬세함이 돋보입니다.',
+'壬':'큰 강처럼 통이 큰 임수(壬水). 모든 것을 담는 포용력과 뛰어난 지혜를 가졌습니다. 기획력이 탁월하고 다재다능한 재주꾼입니다.',
+'癸':'이슬처럼 조용한 계수(癸水). 깊은 내면의 세계와 탁월한 직관을 가졌습니다. 감성이 풍부하며 철학·예술 분야에 특별한 재능이 있습니다.'
+};
+
+// ── State ──
+let sex='남',aiTab=0,aiMode='QUICK',pillarsData={};
+
+// ── Saju calc ──
+function jdn(y,m,d){const a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;return d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045}
+function yP(y,m,d){const sy=(m<2||(m===2&&d<4))?y-1:y;return{s:((sy-4)%10+10)%10,b:((sy-4)%12+12)%12}}
+function mP(m,ys){const mb=[1,2,3,4,5,6,7,8,9,10,11,0],bi=mb[m-1];return{s:([2,4,6,8,0,2,4,6,8,0][ys]+((bi-2+12)%12))%10,b:bi}}
+function dP(y,m,d){const idx=(jdn(y,m,d)+11)%60;return{s:idx%10,b:idx%12}}
+function hP(h,ds){const bi=h>=23?0:Math.floor((h+1)/2)%12;return{s:([0,2,4,6,8,0,2,4,6,8][ds]+bi)%10,b:bi}}
+function lP(yp,mp,male){const fwd=male?(yp.s%2===0):(yp.s%2!==0);let si=mp.s,bi=mp.b;const r=[];for(let i=0;i<10;i++){si=fwd?(si+1)%10:(si+9)%10;bi=fwd?(bi+1)%12:(bi+11)%12;r.push({s:si,b:bi,age:(i+1)*10})}return r}
+
+function setSex(s){sex=s;document.getElementById('mb').classList.toggle('on',s==='남');document.getElementById('fb').classList.toggle('on',s==='여')}
+function goH(){document.getElementById('R').classList.remove('on');document.getElementById('H').classList.add('on');window.scrollTo(0,0)}
+function setTab(t){aiTab=t;['tab0','tab1'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===t));document.getElementById('t0').style.display=t===0?'':'none';document.getElementById('t1').style.display=t===1?'':'none'}
+function setMode(m){aiMode=m;['QUICK','STANDARD','DEEP'].forEach((v,i)=>document.getElementById('md'+i).classList.toggle('on',v===m))}
+function toggleKey(){const el=document.getElementById('apikey');el.type=el.type==='password'?'text':'password'}
+
+function pCard(p,lbl,pc){
+  const sc=ELCSS[SE[p.s]],bc=ELCSS[BE[p.b]];
+  return`<div class="pcard" style="--pc:${pc}">
+    <div class="plbl">${lbl}</div>
+    <div class="pstem" style="color:${sc}">${S[p.s]}</div>
+    <div class="psko">${SK[p.s]}</div>
+    <div class="pdiv"></div>
+    <div class="pbr" style="color:${bc}">${B[p.b]}</div>
+    <div class="pbko">${BK[p.b]}</div>
+    <div class="pdots"><span class="pdot" style="background:${sc}"></span><span class="pdot" style="background:${bc}"></span></div>
+  </div>`;
+}
+
+function calc(){
+  const dv=document.getElementById('bd').value,tv=document.getElementById('bt').value;
+  if(!dv)return;
+  const[y,m,d]=dv.split('-').map(Number),[h]=tv.split(':').map(Number);
+  const a=yP(y,m,d),b=mP(m,a.s),c=dP(y,m,d),e=hP(h,c.s),lps=lP(a,b,sex==='남');
+  pillarsData={y,m,d,h,a,b,c,e,lps};
+
+  // Mini map dots
+  const dotColors=[ELCSS[SE[a.s]],ELCSS[SE[b.s]],ELCSS[SE[c.s]],ELCSS[SE[e.s]]];
+  ['mY','mM','mD','mH'].forEach((id,i)=>document.getElementById(id).setAttribute('fill',dotColors[i]));
+  [['tY',S[a.s]+B[a.b]],['tM',S[b.s]+B[b.b]],['tD',S[c.s]+B[c.b]],['tH',S[e.s]+B[e.b]]].forEach(([id,txt])=>{
+    const el=document.getElementById(id);el.textContent=txt;
+  });
+
+  document.getElementById('rn').textContent=`${sex} · ${S[c.s]}${B[c.b]} 일주`;
+  document.getElementById('rd').textContent=`${y}년 ${m}월 ${d}일  ${h}시`;
+
+  document.getElementById('pg').innerHTML=
+    pCard(a,'년주 年','var(--water)')+pCard(b,'월주 月','var(--wood)')+
+    pCard(c,'일주 日','var(--gold)')+pCard(e,'시주 時','var(--fire)');
+
+  const all=[a,b,c,e],cnt=[0,0,0,0,0];
+  all.forEach(p=>{cnt[SE[p.s]]++;cnt[BE[p.b]]++;});
+  const mx=Math.max(...cnt)||1;
+  document.getElementById('eb').innerHTML=ELK.map((k,i)=>
+    `<div class="ebrow"><div class="enm" style="color:${ELCSS[i]}">${ELH[i]}</div><div class="eko">${k}</div><div class="etr"><div class="efi" style="width:${cnt[i]/mx*100}%;background:${ELCSS[i]}"></div></div><div class="ecnt">${cnt[i]}</div></div>`
+  ).join('');
+
+  document.getElementById('ms').textContent=S[c.s];
+  document.getElementById('ms').style.color=ELCSS[SE[c.s]];
+  document.getElementById('md').textContent=MDESC[S[c.s]];
+
+  document.getElementById('lg').innerHTML=lps.map(p=>
+    `<div class="litem"><div class="lage">${p.age}세</div><div class="lstm" style="color:${ELCSS[SE[p.s]]}">${S[p.s]}</div><div class="lbr" style="color:${ELCSS[BE[p.b]]}">${B[p.b]}</div></div>`
+  ).join('');
+
+  // Reset AI panel
+  document.getElementById('aout').classList.remove('vis');
+  document.getElementById('atxt').textContent='';
+  document.getElementById('aerr').textContent='';
+
+  // Restore API key
+  const saved=localStorage.getItem('cak');
+  if(saved)document.getElementById('apikey').value=saved;
+
+  document.getElementById('H').classList.remove('on');
+  document.getElementById('R').classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// ── Prompts ──
+const SYS_ROMANCE=`당신은 사주명리 상담을 오래 해온 연애 코치입니다. 사주를 봐주되, "올해 운이 이렇다"에서 끝내지 않고 그 사람이 실제로 어떻게 움직여야 하는지까지 짚어주는 것이 당신의 강점입니다. 원국의 오행 균형과 십성 배치, 그리고 올해 세운의 흐름을 근거로 삼아, 듣기 좋은 말과 냉정한 현실을 섞어서 설명해주세요.
+
+아래 순서로 분석해주세요. 사주 용어가 나오면 그때그때 괄호로 쉽게 풀어주세요.
+
+■ STEP 1. 당신의 연애 세팅값 (원국 리딩)
+타고난 연애 기질을 성격 진단하듯 정리해주세요.
+- 한 문장 요약: "당신은 ___ 타입입니다"
+- 끌리는 상대 / 끌어당기는 상대
+- 마음을 여는 속도와 방식
+- 연애에서 빛나는 점 / 반복해서 걸려 넘어지는 점
+각 항목은 원국의 어떤 글자(오행·십성) 때문인지 근거를 붙여주세요.
+
+■ STEP 2. 올해 하반기 연애 기상도 (7~12월)
+- 하반기 종합 점수 (100점)
+- 흐름 요약: 상승세인지 정체인지 반등인지, 왜 그런지 세운 근거로
+- 이번 하반기 연애의 핵심 키워드 한 단어
+
+■ STEP 3. 월별 디테일 (7·8·9·10·11·12월)
+각 달을 아래 5줄로 압축:
+- 점수 (100점)
+- 이 달의 무드 한 줄
+- 신호등: 🟢적극 / 🟡관망 / 🔴조심 중 하나
+- 승부처 날짜 또는 주간 + 그날 뭘 하면 좋은지
+- 조심할 것 딱 하나
+6개월 중 "가장 승부 볼 달"과 "가장 몸 사릴 달"을 마지막에 콕 집어주세요.
+
+■ STEP 4. 올해 들어올 인연의 몽타주
+- 나타나기 쉬운 시기
+- 그 사람의 결: 연상/동갑/연하, 분위기, 대략의 직업군이나 성향
+- 만나게 될 경로 (직장, 취미모임, 소개, 여행지, 온라인 중 확률 높은 순)
+- 올해 엮이면 소모적인 유형
+
+■ STEP 5. 썸·고백·재회 타이밍
+- 썸이 붙기 쉬운 시기와, 상대가 먼저 올지 내가 움직여야 할지
+- 고백한다면 성공률 가장 높은 달
+- 재회운: 가능성, 새 인연 vs 재회 냉정한 판단
+
+■ STEP 6. 나에게 맞는 사람 / 안 맞는 사람
+표로 정리해주세요.
+- 잘 맞는 오행 / 띠 / 성격 유형
+- 피해야 할 유형과 그 이유
+- 이 사람들을 알아보는 현실 단서
+
+■ STEP 7. 연애운 부스팅 처방
+- 기운을 채워주는 색 / 피하면 좋은 색
+- 어울리는 무드의 스타일·소품
+- 인연이 열리는 장소와 활동
+- 바꾸면 좋은 행동 습관 하나
+
+■ STEP 8. 코치의 팩폭
+- 올해 하반기 반드시 조심할 것
+- 놓치면 두고두고 아까울 기회
+- 하반기 통틀어 가장 중요한 한 달
+- 하반기 연애를 한 문장으로
+
+[마무리]
+- 하반기 연애운 종합 결론 (3~4줄)
+- 하반기 연애 성공 확률 (%)과 그 숫자가 나온 명리학적 이유
+
+[작성 규칙]
+- 초보자 눈높이로, 용어는 반드시 풀어서
+- 칭찬만 하지 말고 단점·리스크도 같은 비중으로
+- 모든 판단에 "왜"를 붙이기 (근거 없는 단정 금지)
+- 표와 카드형 정리를 적극 활용해 한눈에 들어오게
+- 점수와 확률은 후하게 주지 말고 정직하게 분포시키기`;
+
+const SYS_GENERAL=`너는 《자평진전》, 《적천수》, 《궁통보감》을 포함한 전통 명리학의 해석 체계를 비교·종합하는 해석자다.
+
+다음 원칙을 지킨다.
+- 근거가 있는 범위에서는 직설적으로 설명한다.
+- 과장된 희망회로와 공포 조장을 피한다.
+- 사망, 중병, 사고, 파산, 범죄, 이혼, 특정 사건을 확정적으로 예언하지 않는다.
+- 입력에 없는 가족사, 질병, 직업, 관계, 사건을 만들어내지 않는다.
+
+답변 첫 줄에 반드시 아래를 출력한다:
+[해석 안내] 이 해석은 사용자가 제공한 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.
+
+해석은 아래 10단계를 선택된 MODE에 맞춰 출력한다:
+
+QUICK 모드: 1·2·6·7·8·9·10단계를 압축 출력
+STANDARD 모드: 1~10단계 모두 출력 (향후 5년 세운)
+DEEP 모드: 1~10단계 모두 상세 출력 (향후 20년)
+
+1단계. 사주 구성 총평 - 일간, 오행 분포, 격국, 용신, 강약, 조후 종합
+2단계. 기본 성격·성향 분석 - 욕구, 행동 방식, 인간관계 패턴
+3단계. 대운 흐름 분석 - 10년 단위 평생 대운
+4단계. 세운 흐름 분석 - 연도별 흐름 (MODE별 범위)
+5단계. 신살·귀문·십이운성 분석 (자료 있을 때만)
+6단계. 직설 분석: 단점·약점·보완법
+7단계. 직설 분석: 강점·성장 가능성
+8단계. 분야별 종합 (재물/건강/연애/직업/이동)
+9단계. 현재와 향후 3년 결정 지도
+10단계. 현실 적용 계획·분석 한계
+
+모든 한문 용어는 처음 등장할 때 쉬운 한글 설명을 붙인다.
+핵심 판단은 [Fact] / [Claim] / [Disclosure] 형식으로 작성한다.`;
+
+function buildUserMsg(){
+  const{y,m,d,h,a,b,c,e,lps}=pillarsData;
+  const today=new Date().toISOString().slice(0,10);
+  const luckList=lps.map(p=>`${p.age}세: ${S[p.s]}${B[p.b]}`).join(' / ');
+  if(aiTab===0){
+    const rs=document.getElementById('rstatus').value||'미입력';
+    return`[입력받을 정보]
+- 생년월일: ${y}년 ${m}월 ${d}일
+- 태어난 시간: ${h}시
+- 성별: ${sex}
+- 양력 / 음력: 양력
+- 지금 연애 상태: ${rs}
+
+[계산된 사주팔자]
+년주: ${S[a.s]}${B[a.b]} (${SK[a.s]}${BK[a.b]})
+월주: ${S[b.s]}${B[b.b]} (${SK[b.s]}${BK[b.b]})
+일주: ${S[c.s]}${B[c.b]} (${SK[c.s]}${BK[c.b]})
+시주: ${S[e.s]}${B[e.b]} (${SK[e.s]}${BK[e.b]})
+
+[대운]
+${luckList}
+
+위 정보를 바탕으로 연애 사주 분석을 해주세요.`;
+  }else{
+    const con=document.getElementById('concern').value||'전반적 해석';
+    return`OUTPUT MODE: ${aiMode}
+
+[해석 기준]
+해석 기준일: ${today}
+만세력 계산 출처: 자체 계산 (양력 기준)
+만세력 이미지 첨부 여부: 아니오
+
+[기본 정보]
+양력, 출생지: 한국 (KST +9), 성별: ${sex}
+
+[이미 계산된 만세력]
+년주: ${S[a.s]}${B[a.b]}
+월주: ${S[b.s]}${B[b.b]}
+일주: ${S[c.s]}${B[c.b]}
+시주: ${S[e.s]}${B[e.b]}
+
+[대운]
+${luckList}
+
+[사용자 맥락]
+현재 고민 / 관심 영역: ${con}
+
+위 정보를 바탕으로 사주를 해석해주세요.`;
+  }
+}
+
+async function runAI(){
+  const key=document.getElementById('apikey').value.trim();
+  if(!key){document.getElementById('aerr').textContent='API Key를 입력해주세요.';return}
+  localStorage.setItem('cak',key);
+  const btn=document.getElementById('aiBtn');
+  btn.disabled=true;btn.textContent='분석 중...';
+  document.getElementById('aerr').textContent='';
+  const out=document.getElementById('aout'),txt=document.getElementById('atxt');
+  out.classList.add('vis');txt.textContent='';
+  const cursor=document.createElement('span');cursor.className='acursor';txt.appendChild(cursor);
+
+  const sys=aiTab===0?SYS_ROMANCE:SYS_GENERAL;
+  const user=buildUserMsg();
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'x-api-key':key,
+        'anthropic-version':'2023-06-01',
+        'content-type':'application/json',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-sonnet-5',
+        max_tokens:4096,
+        stream:true,
+        system:sys,
+        messages:[{role:'user',content:user}]
+      })
+    });
+    if(!resp.ok){const e=await resp.json();throw new Error(e.error?.message||resp.statusText)}
+    const reader=resp.body.getReader(),dec=new TextDecoder();
+    let buf='';
+    while(true){
+      const{done,value}=await reader.read();
+      if(done)break;
+      buf+=dec.decode(value,{stream:true});
+      const lines=buf.split('\n');
+      buf=lines.pop();
+      for(const line of lines){
+        if(line.startsWith('data: ')){
+          try{
+            const data=JSON.parse(line.slice(6));
+            if(data.type==='content_block_delta'&&data.delta?.text){
+              cursor.remove();
+              txt.appendChild(document.createTextNode(data.delta.text));
+              txt.appendChild(cursor);
+              out.scrollTop=out.scrollHeight;
+            }
+          }catch(e){}
+        }
+      }
+    }
+    cursor.remove();
+  }catch(e){
+    cursor.remove();
+    document.getElementById('aerr').textContent='오류: '+e.message;
+  }finally{
+    btn.disabled=false;btn.textContent='✦ 분석 시작';
+  }
+}
+</script>
+</body>
+</html>
