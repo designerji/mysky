@@ -459,6 +459,32 @@ input:focus,textarea:focus{border-bottom-color:var(--gold)}
 .cursor{display:inline-block;width:1.5px;height:13px;background:rgba(255,255,255,.7);margin-left:1px;vertical-align:text-bottom;animation:blink .7s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .ai-err{color:var(--fire);font-size:.72rem;margin-top:10px;letter-spacing:.02em}
+
+/* Paywall */
+.analysis-preview{position:relative;max-height:210px;overflow:hidden}
+.paywall-fade{
+  position:absolute;bottom:0;left:0;right:0;height:110px;
+  background:linear-gradient(to bottom,transparent,var(--bg));
+  pointer-events:none;
+}
+.paywall-card{
+  padding:24px 0 0;text-align:center;
+  border-top:1px solid rgba(255,255,255,.06);
+  margin-top:0;
+}
+.paywall-lock{font-size:1.4rem;color:rgba(255,255,255,.5);margin-bottom:12px}
+.paywall-title{font-family:'Hahmlet',serif;font-size:1.25rem;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.paywall-desc{font-size:.72rem;color:rgba(255,255,255,.4);line-height:2;letter-spacing:.03em;margin-bottom:20px}
+.paywall-btn{
+  width:100%;padding:16px;
+  background:#FFFFFF;color:#0C0C0C;
+  border:none;border-radius:0;
+  font-family:inherit;font-size:.82rem;font-weight:700;
+  letter-spacing:.1em;cursor:pointer;margin-bottom:10px;
+  transition:opacity .15s;
+}
+.paywall-btn:active{opacity:.85}
+.paywall-sub{font-size:.62rem;color:rgba(255,255,255,.25);letter-spacing:.08em}
 .bottom-pad{height:48px}
 
 /* Transition */
@@ -542,104 +568,41 @@ input:focus,textarea:focus{border-bottom-color:var(--gold)}
     </div>
   </div>
 
-  <!-- Mini map -->
-  <div class="mini-map-wrap">
-    <div class="mini-ring">
-      <div class="mini-ring-outer"></div>
-      <div class="mini-ring-inner"></div>
-      <svg class="mini-const" viewBox="0 0 140 140" fill="none">
-        <line x1="70" y1="52" x2="70" y2="10" stroke="white" stroke-width=".5" stroke-dasharray="2 2" opacity=".3"/>
-        <line x1="70" y1="88" x2="70" y2="130" stroke="white" stroke-width=".5" stroke-dasharray="2 2" opacity=".3"/>
-        <line x1="52" y1="70" x2="10" y2="70" stroke="white" stroke-width=".5" stroke-dasharray="2 2" opacity=".3"/>
-        <line x1="88" y1="70" x2="130" y2="70" stroke="white" stroke-width=".5" stroke-dasharray="2 2" opacity=".3"/>
-        <!-- Tiny inner stars -->
-        <circle cx="61" cy="62" r="1" fill="white" opacity=".4"/>
-        <circle cx="79" cy="60" r="1" fill="white" opacity=".4"/>
-        <circle cx="84" cy="75" r="1" fill="white" opacity=".4"/>
-        <circle cx="77" cy="85" r="1" fill="white" opacity=".4"/>
-        <circle cx="62" cy="83" r="1" fill="white" opacity=".4"/>
-        <circle cx="57" cy="72" r="1" fill="white" opacity=".4"/>
-        <line x1="61" y1="62" x2="79" y2="60" stroke="white" stroke-width=".4" opacity=".2"/>
-        <line x1="79" y1="60" x2="84" y2="75" stroke="white" stroke-width=".4" opacity=".2"/>
-        <line x1="84" y1="75" x2="77" y2="85" stroke="white" stroke-width=".4" opacity=".2"/>
-        <line x1="77" y1="85" x2="62" y2="83" stroke="white" stroke-width=".4" opacity=".2"/>
-        <line x1="62" y1="83" x2="57" y2="72" stroke="white" stroke-width=".4" opacity=".2"/>
-        <line x1="57" y1="72" x2="61" y2="62" stroke="white" stroke-width=".4" opacity=".2"/>
-      </svg>
-      <!-- 4 pillar dots -->
-      <div class="mini-dots">
-        <div id="dY" class="mini-dot" style="top:3%;left:50%">年</div>
-        <div id="dM" class="mini-dot" style="top:50%;left:97%">月</div>
-        <div id="dD" class="mini-dot" style="top:97%;left:50%">日</div>
-        <div id="dH" class="mini-dot" style="top:50%;left:3%">時</div>
-      </div>
-    </div>
-  </div>
-
   <!-- Pillars -->
   <div class="sec">
     <div class="sec-label">사주팔자 · 四柱八字</div>
     <div class="p-grid" id="pg"></div>
   </div>
 
-  <!-- Elements -->
+  <!-- AI Analysis -->
   <div class="sec">
-    <div class="stat-row">
-      <div class="stat-title">오행 분포</div>
-      <div id="eb"></div>
-    </div>
-  </div>
+    <div class="sec-label">사주 분석</div>
 
-  <!-- Day master -->
-  <div class="sec">
-    <div class="dm-card" id="dmCard"></div>
-  </div>
-
-  <!-- 대운 -->
-  <div class="sec">
-    <div class="stat-row">
-      <div class="stat-title">대운 · 大運</div>
-      <div class="luck-scroll" id="lg"></div>
-    </div>
-  </div>
-
-  <!-- AI -->
-  <div class="sec">
-    <div class="ai-card">
-      <div class="ai-head">
-        <div class="ai-icon">✦</div>
-        <div>
-          <div class="ai-title">AI 사주 분석</div>
-          <div class="ai-desc">Claude가 깊이 있게 해석합니다</div>
-        </div>
-      </div>
-      <div class="tab-row">
-        <button class="tab-btn on" id="tab0" onclick="setTab(0)">연애 코치</button>
-        <button class="tab-btn" id="tab1" onclick="setTab(1)">종합 해석</button>
-      </div>
-      <div id="t0">
-        <div class="field"><label>현재 연애 상태</label>
-          <input type="text" id="rs" placeholder="솔로 / 썸 / 연애 중 / 재회 고민 등"></div>
-      </div>
-      <div id="t1" style="display:none">
-        <div class="field"><label>출력 모드</label>
-          <div class="mode-row">
-            <button class="mode-btn on" id="md0" onclick="setMode('QUICK')">QUICK</button>
-            <button class="mode-btn" id="md1" onclick="setMode('STANDARD')">STANDARD</button>
-            <button class="mode-btn" id="md2" onclick="setMode('DEEP')">DEEP</button>
-          </div>
-        </div>
-        <div class="field"><label>관심 영역 (선택)</label>
-          <input type="text" id="con" placeholder="재물 / 직업 / 연애 / 건강 등"></div>
-      </div>
-      <div class="key-wrap">
+    <!-- Key input (shown if no key saved) -->
+    <div id="keySection">
+      <div class="key-wrap" style="margin-bottom:16px">
         <label>Claude API Key</label>
         <input type="password" id="akey" placeholder="sk-ant-api03-...">
         <button class="key-eye" onclick="toggleKey()">👁</button>
       </div>
-      <button class="ai-run" id="aiBtn" onclick="runAI()">✦ 분석 시작하기</button>
-      <div class="ai-output" id="aout"><div class="ai-text" id="atxt"></div></div>
-      <div class="ai-err" id="aerr"></div>
+      <button class="ai-run" onclick="startAutoAnalysis()">✦ 사주 분석 시작</button>
+    </div>
+
+    <!-- Analysis output with paywall -->
+    <div id="analysisSection" style="display:none;position:relative">
+      <div class="analysis-preview" id="aout">
+        <div class="ai-text" id="atxt"></div>
+        <div class="ai-err" id="aerr"></div>
+        <div class="paywall-fade" id="paywallFade" style="display:none"></div>
+      </div>
+      <!-- Paywall CTA -->
+      <div class="paywall-card" id="paywallCard" style="display:none">
+        <div class="paywall-lock">✦</div>
+        <div class="paywall-title">전체 분석 잠금해제</div>
+        <div class="paywall-desc">연애운 · 재물운 · 직업운 · 대운<br>상세 12페이지 분석 리포트</div>
+        <button class="paywall-btn">₩9,900 결제하고 전체 보기</button>
+        <div class="paywall-sub">또는 API 키로 무제한 이용</div>
+      </div>
     </div>
   </div>
   <div class="bottom-pad"></div>
@@ -650,7 +613,6 @@ const S=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
 const SK=['갑','을','병','정','무','기','경','신','임','계'];
 const B=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const BK=['자','축','인','묘','진','사','오','미','신','유','술','해'];
-const ELH=['木','火','土','金','水'],ELK=['목','화','토','금','수'];
 const ELC=['var(--wood)','var(--fire)','var(--earth)','var(--metal)','var(--water)'];
 const SE=[0,0,1,1,2,2,3,3,4,4],BE=[4,2,0,0,2,1,1,2,3,3,2,4];
 const DM_DESC={
@@ -666,12 +628,10 @@ const DM_DESC={
 '癸':{sub:'계수 · 음수',desc:'이슬처럼 조용한 계수(癸水). 깊은 내면의 세계와 탁월한 직관을 가졌습니다. 감성이 풍부하며 철학·예술 분야에 특별한 재능이 있습니다.'}
 };
 
-let sex='남',aiTab=0,aiMode='QUICK',PD={};
+let sex='남',PD={};
 
 function setSex(s){sex=s;document.getElementById('mb').classList.toggle('on',s==='남');document.getElementById('fb').classList.toggle('on',s==='여')}
 function goH(){document.getElementById('R').classList.remove('on');void document.getElementById('R').offsetWidth;document.getElementById('H').classList.add('on');window.scrollTo(0,0)}
-function setTab(t){aiTab=t;['tab0','tab1'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===t));document.getElementById('t0').style.display=t===0?'':'none';document.getElementById('t1').style.display=t===1?'':'none'}
-function setMode(m){aiMode=m;['QUICK','STANDARD','DEEP'].forEach((v,i)=>document.getElementById('md'+i).classList.toggle('on',v===m))}
 function toggleKey(){const e=document.getElementById('akey');e.type=e.type==='password'?'text':'password'}
 
 function jdn(y,m,d){const a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;return d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045}
@@ -701,10 +661,6 @@ function calc(){
   const a=yP(y,m,d),b=mP(m,a.s),c=dP(y,m,d),e=hP(h,c.s),lps=lP(a,b,sex==='남');
   PD={y,m,d,h,a,b,c,e,lps};
 
-  // Mini dots border color
-  const dotC=[ELC[SE[a.s]],ELC[SE[b.s]],ELC[SE[c.s]],ELC[SE[e.s]]];
-  ['dY','dM','dD','dH'].forEach((id,i)=>{document.getElementById(id).style.borderColor=dotC[i];document.getElementById(id).style.color=dotC[i]});
-
   document.getElementById('rtag').textContent=`${S[c.s]}${B[c.b]} 일주 · ${sex}`;
   document.getElementById('rinfo').textContent=`${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}  ${h}시생`;
 
@@ -714,41 +670,21 @@ function calc(){
     pCard(c,'일주 日','var(--gold)')+
     pCard(e,'시주 時','var(--fire)');
 
-  const all=[a,b,c,e],cnt=[0,0,0,0,0];
-  all.forEach(p=>{cnt[SE[p.s]]++;cnt[BE[p.b]]++;});
-  const mx=Math.max(...cnt)||1;
-  document.getElementById('eb').innerHTML=ELH.map((h,i)=>
-    `<div class="elem-row">
-      <div class="elem-pill">
-        <span class="elem-ico" style="color:${ELC[i]}">${h}</span>
-        <span style="font-size:.65rem;color:var(--g2)">${ELK[i]}</span>
-        <div class="elem-bar-bg"><div class="elem-bar-fill" style="width:${cnt[i]/mx*100}%;background:${ELC[i]}"></div></div>
-        <span class="elem-num">${cnt[i]}</span>
-      </div>
-    </div>`
-  ).join('');
-
-  const dm=DM_DESC[S[c.s]];
-  document.getElementById('dmCard').innerHTML=`
-    <div class="dm-head">
-      <div class="dm-hanja" style="background:${ELC[SE[c.s]]}22;color:${ELC[SE[c.s]]}">${S[c.s]}</div>
-      <div><div class="dm-name">일간 · 日干</div><div class="dm-sub">${dm.sub}</div></div>
-    </div>
-    <div class="dm-desc">${dm.desc}</div>`;
-
-  document.getElementById('lg').innerHTML=lps.map(p=>
-    `<div class="luck-chip">
-      <div class="luck-age">${p.age}세</div>
-      <div class="luck-stem" style="color:${ELC[SE[p.s]]}">${S[p.s]}</div>
-      <div class="luck-br" style="color:${ELC[BE[p.b]]}">${B[p.b]}</div>
-    </div>`
-  ).join('');
-
-  document.getElementById('aout').classList.remove('vis');
   document.getElementById('atxt').textContent='';
   document.getElementById('aerr').textContent='';
+  document.getElementById('paywallFade').style.display='none';
+  document.getElementById('paywallCard').style.display='none';
+
   const saved=localStorage.getItem('cak');
-  if(saved)document.getElementById('akey').value=saved;
+  if(saved){
+    document.getElementById('akey').value=saved;
+    document.getElementById('keySection').style.display='none';
+    document.getElementById('analysisSection').style.display='block';
+    setTimeout(()=>startAutoAnalysis(),500);
+  }else{
+    document.getElementById('keySection').style.display='block';
+    document.getElementById('analysisSection').style.display='none';
+  }
 
   document.getElementById('H').classList.remove('on');
   void document.getElementById('R').offsetWidth;
@@ -756,92 +692,52 @@ function calc(){
   window.scrollTo(0,0);
 }
 
-// ── Prompts ──
-const P_ROMANCE=`당신은 사주명리 상담을 오래 해온 연애 코치입니다. 사주를 봐주되, "올해 운이 이렇다"에서 끝내지 않고 그 사람이 실제로 어떻게 움직여야 하는지까지 짚어주는 것이 당신의 강점입니다. 원국의 오행 균형과 십성 배치, 그리고 올해 세운의 흐름을 근거로 삼아, 듣기 좋은 말과 냉정한 현실을 섞어서 설명해주세요.
+const P_ANALYSIS=`당신은 전통 명리학을 현대적으로 해석하는 사주 분석가입니다.
 
-아래 순서로 분석해주세요. 사주 용어가 나오면 그때그때 괄호로 쉽게 풀어주세요.
+사주팔자를 분석하여 아래 순서로 작성하세요:
 
-■ STEP 1. 당신의 연애 세팅값 (원국 리딩)
-- 한 문장 요약: "당신은 ___ 타입입니다"
-- 끌리는 상대 / 끌어당기는 상대
-- 마음을 여는 속도와 방식
-- 연애에서 빛나는 점 / 반복해서 걸려 넘어지는 점
+1. 이 사주의 핵심을 한 문장으로 요약 (시적이고 감성적으로)
+2. 타고난 성품: 일간을 중심으로 성격과 기질
+3. 삶의 흐름: 오행의 균형과 운명의 방향
+4. 올해의 운세: 현재 대운의 흐름과 기회
 
-■ STEP 2. 올해 하반기 연애 기상도 (7~12월)
-- 하반기 종합 점수 (100점)
-- 흐름 요약 + 세운 근거
-- 핵심 키워드 한 단어
-
-■ STEP 3. 월별 디테일 (7~12월 각 달을 5줄로)
-- 점수 / 무드 / 신호등 🟢🟡🔴 / 승부처 날짜 / 조심할 것
-- 가장 승부 볼 달, 가장 몸 사릴 달
-
-■ STEP 4. 올해 들어올 인연 몽타주
-■ STEP 5. 썸·고백·재회 타이밍
-■ STEP 6. 잘 맞는 / 안 맞는 사람 (표로)
-■ STEP 7. 연애운 부스팅 처방 (색/스타일/장소/습관)
-■ STEP 8. 코치의 팩폭
-
-[마무리] 하반기 연애 종합 결론 + 성공 확률 (%)
-
-작성 규칙: 초보자 눈높이로, 용어 풀이 필수, 단점도 같은 비중, 근거 없는 단정 금지, 점수는 정직하게`;
-
-const P_GENERAL=`너는 《자평진전》, 《적천수》, 《궁통보감》을 포함한 전통 명리학의 해석 체계를 비교·종합하는 해석자다.
-
-원칙: 근거 있는 범위에서 직설적으로, 과장·공포 조장 금지, 사건 확정 예언 금지, 입력에 없는 정보 생성 금지.
-
-답변 첫 줄: [해석 안내] 이 해석은 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·진단·법률·투자 조언이 아닙니다.
-
-선택된 MODE에 따라 출력:
-- QUICK: 1·2·6·7·8·9·10단계 압축
-- STANDARD: 1~10단계 전체 (향후 5년)
-- DEEP: 1~10단계 상세 (향후 20년)
-
-1단계. 사주 구성 총평 | 2단계. 성격·성향 | 3단계. 대운 | 4단계. 세운 | 5단계. 신살(자료 있을 때) | 6단계. 단점·약점 직설 | 7단계. 강점·성장 직설 | 8단계. 분야별 종합(재물/건강/연애/직업) | 9단계. 향후 3년 결정 지도 | 10단계. 현실 적용 계획
-
-한문 용어는 처음 등장 시 한글 풀이 필수. 핵심 판단은 [Fact]/[Claim]/[Disclosure] 형식.`;
+따뜻하고 시적인 언어로, 전문용어는 쉽게 풀어서 설명해주세요. 간결하고 아름답게 써주세요.`;
 
 function buildMsg(){
   const{y,m,d,h,a,b,c,e,lps}=PD;
   const today=new Date().toISOString().slice(0,10);
   const luck=lps.map(p=>`${p.age}세:${S[p.s]}${B[p.b]}`).join(' ');
-  if(aiTab===0){
-    return`[입력]
-생년월일: ${y}년 ${m}월 ${d}일  태어난 시간: ${h}시  성별: ${sex}  양력
-현재 연애 상태: ${document.getElementById('rs').value||'미입력'}
+  return`해석 기준일: ${today} | 양력 | 성별: ${sex}
 
 [사주팔자]
 년주:${S[a.s]}${B[a.b]}(${SK[a.s]}${BK[a.b]}) 월주:${S[b.s]}${B[b.b]}(${SK[b.s]}${BK[b.b]}) 일주:${S[c.s]}${B[c.b]}(${SK[c.s]}${BK[c.b]}) 시주:${S[e.s]}${B[e.b]}(${SK[e.s]}${BK[e.b]})
-대운: ${luck}
-
-연애 사주 분석을 부탁드립니다.`;
-  }
-  return`OUTPUT MODE: ${aiMode}
-해석 기준일: ${today} | 양력 | 출생지: 한국 | 성별: ${sex}
-
-[만세력]
-년주:${S[a.s]}${B[a.b]} 월주:${S[b.s]}${B[b.b]} 일주:${S[c.s]}${B[c.b]} 시주:${S[e.s]}${B[e.b]}
-대운: ${luck}
-관심 영역: ${document.getElementById('con').value||'전반적 해석'}`;
+대운: ${luck}`;
 }
 
-async function runAI(){
+async function startAutoAnalysis(){
   const key=document.getElementById('akey').value.trim();
   if(!key){document.getElementById('aerr').textContent='API Key를 입력해주세요.';return}
   localStorage.setItem('cak',key);
-  const btn=document.getElementById('aiBtn');
-  btn.disabled=true;btn.textContent='분석 중...';
+
+  document.getElementById('keySection').style.display='none';
+  document.getElementById('analysisSection').style.display='block';
+
+  const txt=document.getElementById('atxt');
+  txt.textContent='';
   document.getElementById('aerr').textContent='';
-  const out=document.getElementById('aout'),txt=document.getElementById('atxt');
-  out.classList.add('vis');txt.textContent='';
+  document.getElementById('paywallFade').style.display='none';
+  document.getElementById('paywallCard').style.display='none';
+
   const cur=document.createElement('span');cur.className='cursor';txt.appendChild(cur);
+  let charCount=0,paywallShown=false;
+
   try{
     const resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'x-api-key':key,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-5',max_tokens:4096,stream:true,system:aiTab===0?P_ROMANCE:P_GENERAL,messages:[{role:'user',content:buildMsg()}]})
+      body:JSON.stringify({model:'claude-sonnet-5',max_tokens:2000,stream:true,system:P_ANALYSIS,messages:[{role:'user',content:buildMsg()}]})
     });
-    if(!resp.ok){const err=await resp.json();throw new Error(err.error?.message||resp.statusText)}
+    if(!resp.ok){const e=await resp.json();throw new Error(e.error?.message||resp.statusText)}
     const reader=resp.body.getReader(),dec=new TextDecoder();let buf='';
     while(true){
       const{done,value}=await reader.read();if(done)break;
@@ -849,15 +745,31 @@ async function runAI(){
       const lines=buf.split('\n');buf=lines.pop();
       for(const line of lines){
         if(line.startsWith('data: ')){
-          try{const d=JSON.parse(line.slice(6));if(d.delta?.text){cur.remove();txt.appendChild(document.createTextNode(d.delta.text));txt.appendChild(cur);out.scrollTop=out.scrollHeight}}catch(e){}
+          try{
+            const ev=JSON.parse(line.slice(6));
+            if(ev.delta?.text&&!paywallShown){
+              const chunk=ev.delta.text;
+              cur.remove();txt.appendChild(document.createTextNode(chunk));txt.appendChild(cur);
+              charCount+=chunk.length;
+              if(charCount>=300){
+                paywallShown=true;cur.remove();
+                document.getElementById('paywallFade').style.display='block';
+                document.getElementById('paywallCard').style.display='block';
+                reader.cancel();return;
+              }
+            }
+          }catch(e){}
         }
       }
     }
     cur.remove();
-  }catch(err){
-    cur.remove();document.getElementById('aerr').textContent='오류: '+err.message;
-  }finally{
-    btn.disabled=false;btn.textContent='✦ 분석 시작하기';
+    document.getElementById('paywallFade').style.display='block';
+    document.getElementById('paywallCard').style.display='block';
+  }catch(e){
+    if(e.name!=='AbortError'){
+      cur.remove();
+      document.getElementById('aerr').textContent='오류: '+e.message;
+    }
   }
 }
 </script>
