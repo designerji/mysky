@@ -112,14 +112,8 @@ input:focus{border-bottom-color:var(--gold)}
 .acc-loading-txt{font-size:.65rem;color:rgba(255,255,255,.25);text-align:center;padding:16px 24px;letter-spacing:.08em}
 .acc-err{padding:24px;font-size:.75rem;color:var(--fire);letter-spacing:.02em}
 
-/* Key section (result) */
-.key-sec{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
-.key-hint{font-size:.65rem;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:.03em}
-.key-wrap{position:relative;margin-bottom:14px}
-.key-wrap label{display:block;font-size:.52rem;color:rgba(255,255,255,.3);margin-bottom:8px;letter-spacing:.2em;text-transform:uppercase}
-.key-eye{position:absolute;right:0;top:26px;background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:.75rem;padding:2px}
-.ai-run{width:100%;padding:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:0;color:rgba(255,255,255,.8);font-family:inherit;font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .18s}
-.ai-run:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+/* Locked section title placeholder */
+.acc-title-blur{flex:1;font-size:.82rem;color:rgba(255,255,255,.12);letter-spacing:.35em;filter:blur(4px);pointer-events:none;overflow:hidden;white-space:nowrap}
 
 /* ── PAYWALL ── */
 .paywall-wrap{margin:0 24px 0;padding:28px 24px;border:1px solid rgba(255,255,255,.08);text-align:center}
@@ -201,30 +195,10 @@ input:focus{border-bottom-color:var(--gold)}
     <button class="manse-more-btn">만세력 자세히 보기 &rsaquo;</button>
   </div>
 
-  <!-- API key input (hidden when key saved) -->
-  <div id="keySection" class="key-sec" style="display:none">
-    <div class="key-hint">사주 분석을 시작하려면 Claude API 키를 입력하세요</div>
-    <div class="key-wrap">
-      <label>Claude API Key</label>
-      <input type="password" id="akey" placeholder="sk-ant-api03-...">
-      <button class="key-eye" onclick="toggleKey()">👁</button>
-    </div>
-    <button class="ai-run" onclick="startAutoAnalysis()">✦ 사주 분석 시작</button>
-  </div>
-  <!-- Hidden key input for auto-start -->
-  <input type="hidden" id="akey-saved">
-
   <!-- 사주해설 -->
   <div class="haeseol-hdr">사주해설</div>
   <div class="haeseol-hint">각 제목을 클릭하면 해설이 펼쳐져요</div>
 
-  <!-- Accordion -->
-  <div id="accLoading" style="display:none">
-    <div class="acc-shimmer"></div>
-    <div class="acc-shimmer"></div>
-    <div class="acc-shimmer"></div>
-    <div class="acc-loading-txt">사주를 분석하고 있습니다...</div>
-  </div>
   <div id="accItems"></div>
 
   <!-- Paywall -->
@@ -262,18 +236,16 @@ const SECTION_DEFS=[
   {id:'closing',label:'마지막 한마디',icon:'❝'},
 ];
 
-let sex='남',PD={};
+let sex='남';
 
 function setSex(s){sex=s;document.getElementById('mb').classList.toggle('on',s==='남');document.getElementById('fb').classList.toggle('on',s==='여')}
 function goH(){document.getElementById('R').classList.remove('on');void document.getElementById('R').offsetWidth;document.getElementById('H').classList.add('on');window.scrollTo(0,0)}
-function toggleKey(){const e=document.getElementById('akey');e.type=e.type==='password'?'text':'password'}
 
 function jdn(y,m,d){const a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;return d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045}
 function yP(y,m,d){const sy=(m<2||(m===2&&d<4))?y-1:y;return{s:((sy-4)%10+10)%10,b:((sy-4)%12+12)%12}}
 function mP(m,ys){const mb=[1,2,3,4,5,6,7,8,9,10,11,0],bi=mb[m-1];return{s:([2,4,6,8,0,2,4,6,8,0][ys]+((bi-2+12)%12))%10,b:bi}}
 function dP(y,m,d){const idx=(jdn(y,m,d)+11)%60;return{s:idx%10,b:idx%12}}
 function hP(h,ds){const bi=h>=23?0:Math.floor((h+1)/2)%12;return{s:([0,2,4,6,8,0,2,4,6,8][ds]+bi)%10,b:bi}}
-function lP(yp,mp,male){const fwd=male?(yp.s%2===0):(yp.s%2!==0);let si=mp.s,bi=mp.b;const r=[];for(let i=0;i<10;i++){si=fwd?(si+1)%10:(si+9)%10;bi=fwd?(bi+1)%12:(bi+11)%12;r.push({s:si,b:bi,age:(i+1)*10})}return r}
 
 function renderManseGrid(si,il,wol,yeon){
   const pillars=[si,il,wol,yeon];
@@ -291,48 +263,22 @@ function renderManseGrid(si,il,wol,yeon){
   document.getElementById('mg').innerHTML=h;
 }
 
-function renderAccordion(sections){
-  document.getElementById('accLoading').style.display='none';
+function renderLockedSections(){
   let h='';
-  sections.forEach((sec,i)=>{
-    const def=SECTION_DEFS[i]||{icon:'◦',label:sec.label||''};
-    if(i===0){
-      h+=`<div class="acc-item open">
-        <div class="acc-head" onclick="toggleAcc(this)">
-          <div class="acc-label">${def.label}</div>
-          <div class="acc-title-row">
-            <span class="acc-icon">${def.icon}</span>
-            <div class="acc-title">${sec.title}</div>
-            <span class="acc-chev">∧</span>
-          </div>
+  SECTION_DEFS.forEach(def=>{
+    h+=`<div class="acc-item locked">
+      <div class="acc-head" onclick="scrollToPaywall()">
+        <div class="acc-label">${def.label}</div>
+        <div class="acc-title-row">
+          <span class="acc-icon">${def.icon}</span>
+          <div class="acc-title-blur">●●●●●●●●●●●●●●●●●●●●●</div>
+          <span class="acc-lock">✦</span>
         </div>
-        <div class="acc-body"><div class="acc-text">${sec.content}</div></div>
-      </div>`;
-    }else{
-      h+=`<div class="acc-item locked">
-        <div class="acc-head" onclick="scrollToPaywall()">
-          <div class="acc-label">${def.label}</div>
-          <div class="acc-title-row">
-            <span class="acc-icon">${def.icon}</span>
-            <div class="acc-title">${sec.title}</div>
-            <span class="acc-lock">✦</span>
-          </div>
-        </div>
-      </div>`;
-    }
+      </div>
+    </div>`;
   });
   document.getElementById('accItems').innerHTML=h;
   document.getElementById('paywallWrap').style.display='block';
-}
-
-function toggleAcc(head){
-  const item=head.closest('.acc-item');
-  const body=item.querySelector('.acc-body');
-  const chev=head.querySelector('.acc-chev');
-  const open=item.classList.contains('open');
-  item.classList.toggle('open',!open);
-  body.style.display=open?'none':'block';
-  chev.textContent=open?'∨':'∧';
 }
 
 function scrollToPaywall(){
@@ -343,8 +289,7 @@ function calc(){
   const dv=document.getElementById('bd').value,tv=document.getElementById('bt').value;
   if(!dv)return;
   const[y,m,d]=dv.split('-').map(Number),[h]=tv.split(':').map(Number);
-  const a=yP(y,m,d),b=mP(m,a.s),c=dP(y,m,d),e=hP(h,c.s),lps=lP(a,b,sex==='남');
-  PD={y,m,d,h,a,b,c,e,lps};
+  const a=yP(y,m,d),b=mP(m,a.s),c=dP(y,m,d),e=hP(h,c.s);
 
   document.getElementById('rpills').innerHTML=
     `<span class="r-pill">${y}년 ${String(m).padStart(2,'0')}월 ${String(d).padStart(2,'0')}일</span>`+
@@ -353,85 +298,12 @@ function calc(){
     `<span class="r-pill">${sex}성</span>`;
 
   renderManseGrid(e,c,b,a);
-
-  document.getElementById('accItems').innerHTML='';
-  document.getElementById('paywallWrap').style.display='none';
-
-  const saved=localStorage.getItem('cak');
-  if(saved){
-    document.getElementById('akey').value=saved;
-    document.getElementById('keySection').style.display='none';
-    document.getElementById('accLoading').style.display='block';
-    setTimeout(()=>startAutoAnalysis(),400);
-  }else{
-    document.getElementById('accLoading').style.display='none';
-    document.getElementById('keySection').style.display='block';
-  }
+  renderLockedSections();
 
   document.getElementById('H').classList.remove('on');
   void document.getElementById('R').offsetWidth;
   document.getElementById('R').classList.add('on');
   window.scrollTo(0,0);
-}
-
-const P_HAESEOL=`사주팔자를 분석해서 아래 JSON 형식으로만 응답하세요. JSON 외 다른 텍스트, markdown 없이 순수 JSON만 출력하세요.
-
-{
-  "sections": [
-    {"id":"summary","label":"한마디로","title":"이 사주를 상징하는 시적인 한 줄 제목 (20-35자)","content":"3-4문단의 자세한 분석"},
-    {"id":"ohaeng","label":"오행으로 보는 사주","title":"오행 특성을 담은 시적인 한 줄 제목","content":""},
-    {"id":"ilju","label":"일주와 십성","title":"일주 성향을 담은 시적인 한 줄 제목","content":""},
-    {"id":"critique","label":"쓴소리 좀 할게","title":"약점을 직설적으로 표현한 한 줄 제목","content":""},
-    {"id":"charm","label":"나만의 매력","title":"매력 포인트를 담은 시적인 한 줄 제목","content":""},
-    {"id":"identity","label":"나라는 사람","title":"정체성을 담은 시적인 한 줄 제목","content":""},
-    {"id":"match","label":"나에게 맞는 사람","title":"인연 특성을 담은 시적인 한 줄 제목","content":""},
-    {"id":"place","label":"머물면 좋은 곳","title":"어울리는 환경을 담은 시적인 한 줄 제목","content":""},
-    {"id":"closing","label":"마지막 한마디","title":"응원과 통찰이 담긴 시적인 한 줄 제목","content":""}
-  ]
-}
-
-규칙: summary의 content만 3-4문단 작성 (나머지 content는 빈 문자열). 제목은 호기심을 자극하는 시적인 한 줄. 따뜻하고 문학적인 한국어. 전문용어는 괄호로 풀이.`;
-
-function buildMsg(){
-  const{y,m,d,h,a,b,c,e,lps}=PD;
-  const today=new Date().toISOString().slice(0,10);
-  const luck=lps.slice(0,5).map(p=>`${p.age}세:${S[p.s]}${B[p.b]}`).join(' ');
-  return`해석 기준일: ${today} | 양력 | 성별: ${sex}
-
-[사주팔자]
-년주:${S[a.s]}${B[a.b]}(${SK[a.s]}${BK[a.b]}) 월주:${S[b.s]}${B[b.b]}(${SK[b.s]}${BK[b.b]}) 일주:${S[c.s]}${B[c.b]}(${SK[c.s]}${BK[c.b]}) 시주:${S[e.s]}${B[e.b]}(${SK[e.s]}${BK[e.b]})
-현재 대운: ${luck}`;
-}
-
-async function startAutoAnalysis(){
-  const key=document.getElementById('akey').value.trim();
-  if(!key){
-    document.getElementById('accLoading').style.display='none';
-    document.getElementById('keySection').style.display='block';
-    return;
-  }
-  localStorage.setItem('cak',key);
-  document.getElementById('keySection').style.display='none';
-  document.getElementById('accLoading').style.display='block';
-  document.getElementById('accItems').innerHTML='';
-  document.getElementById('paywallWrap').style.display='none';
-
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'x-api-key':key,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-5',max_tokens:2000,system:P_HAESEOL,messages:[{role:'user',content:buildMsg()}]})
-    });
-    if(!resp.ok){const ev=await resp.json();throw new Error(ev.error?.message||resp.statusText)}
-    const data=await resp.json();
-    const raw=data.content[0]?.text||'';
-    const clean=raw.replace(/^```(?:json)?\n?/,'').replace(/\n?```$/,'').trim();
-    const parsed=JSON.parse(clean);
-    renderAccordion(parsed.sections);
-  }catch(err){
-    document.getElementById('accLoading').style.display='none';
-    document.getElementById('accItems').innerHTML=`<div class="acc-err">분석 오류: ${err.message}</div>`;
-  }
 }
 </script>
 </body>
