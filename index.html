@@ -3,307 +3,501 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<title>천상 사주</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Hahmlet:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>사주명리</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#080806;--s1:#111110;--s2:#191917;--s3:#202020;
-  --b:rgba(255,255,255,.08);--b2:rgba(255,255,255,.16);
-  --gold:#FFFFFF;--w:#FFFFFF;--g1:#AAAAAA;--g2:#777777;
-  --wood:#4ADE80;--fire:#F87171;--earth:#FBBF24;--metal:#93C5FD;--water:#60A5FA;
+::-webkit-scrollbar{display:none}
+*{scrollbar-width:none}
+html,body{height:100%;width:100%;overflow:hidden}
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#080808;color:#edede8;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  max-width:430px;margin:0 auto;
+  position:relative;
 }
-html,body{min-height:100%;overflow-x:hidden}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--w);max-width:430px;margin:0 auto;position:relative;padding-bottom:env(safe-area-inset-bottom,0px)}
-body::before{content:'';position:fixed;inset:0;max-width:430px;margin:0 auto;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:180px 180px;opacity:.028;pointer-events:none;z-index:100}
-body::after{content:'';position:fixed;top:0;left:50%;transform:translateX(-50%);width:430px;height:100vh;background:radial-gradient(ellipse 70% 50% at 50% 42%,rgba(255,248,220,.055) 0%,transparent 65%);pointer-events:none;z-index:0}
-.scr{position:relative;z-index:1;display:none;min-height:100dvh;opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease}
-.scr.on{display:block;opacity:1;transform:none}
+body::after{
+  content:'';position:fixed;inset:0;max-width:430px;margin:0 auto;
+  z-index:9999;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:180px;
+}
+.sr{font-family:'Nanum Myeongjo','Noto Serif KR',serif}
+.ss{font-family:'Noto Sans KR',sans-serif}
 
-/* ── HOME ── */
-.home-top{padding:58px 24px 0}
-.home-title{font-family:'Hahmlet',serif;font-size:3.6rem;font-weight:700;line-height:1.05;letter-spacing:-.01em;padding:28px 0 6px;border-bottom:1px solid rgba(255,255,255,.06)}
-.home-title .light{font-weight:300;color:rgba(255,255,255,.5);display:block;font-size:1.1rem;letter-spacing:.15em;margin-bottom:8px;font-family:'Noto Sans KR',sans-serif}
-.home-title span{color:var(--gold)}
-.home-sub{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.8;padding:16px 0 22px;border-bottom:1px solid rgba(255,255,255,.06);letter-spacing:.02em}
-.star-ring-wrap{display:flex;justify-content:center;padding:48px 24px 0;position:relative}
-.glow-orb-wrap{width:280px;height:280px;position:relative;display:flex;align-items:center;justify-content:center}
-.glow-halo{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,rgba(255,248,200,.14) 0%,rgba(255,255,255,.05) 40%,transparent 68%);filter:blur(30px)}
-.glow-mid{position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 60%);filter:blur(12px)}
-.orbit-1{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.12);animation:spin1 90s linear infinite}
-.orbit-1::before,.orbit-1::after{content:'';position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.6);top:50%;left:-1.5px;transform:translateY(-50%)}
-.orbit-1::after{left:auto;right:-1.5px}
-.orbit-2{position:absolute;inset:38px;border-radius:50%;border:1px solid rgba(255,255,255,.07);transform:rotate(45deg);animation:spin2 60s linear infinite reverse}
-.orbit-3{position:absolute;inset:72px;border-radius:50%;border:1px solid rgba(255,255,255,.1);animation:spin1 40s linear infinite}
-@keyframes spin1{to{transform:rotate(360deg)}}
-@keyframes spin2{to{transform:rotate(405deg)}}
-.dark-sphere{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 38% 36%,rgba(60,55,50,.9),rgba(8,8,6,.98) 65%);box-shadow:0 0 60px rgba(0,0,0,.8),inset 0 0 30px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;position:relative}
-.sphere-text-ko{font-size:.55rem;color:rgba(255,255,255,.6);letter-spacing:.3em;font-weight:300}
-.sphere-text-hj{font-size:.48rem;color:rgba(255,255,255,.35);margin-top:2px;letter-spacing:.15em}
-.starburst{position:absolute;top:-8px;right:4px;width:44px;height:44px;z-index:3}
-.four-star{position:absolute;bottom:16px;right:12px;width:22px;height:22px;z-index:3;animation:pulse-star 4s ease-in-out infinite}
-@keyframes pulse-star{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-.form-wrap{padding:48px 24px 0}
-.form-card{background:transparent;border:none;padding:0}
-.field{margin-bottom:0;border-bottom:1px solid rgba(255,255,255,.06);padding:16px 0}
-.field>label{display:block;font-size:.55rem;color:rgba(255,255,255,.45);font-weight:300;margin-bottom:8px;letter-spacing:.2em;text-transform:uppercase}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-input[type=date],input[type=time],input[type=text],input[type=password],select{width:100%;padding:12px 0;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);border-radius:0;color:var(--w);font-family:inherit;font-size:1rem;font-weight:500;outline:none;appearance:none;-webkit-appearance:none;transition:border-color .15s}
-input:focus{border-bottom-color:var(--gold)}
-.sex-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sx{padding:14px;background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:0;color:rgba(255,255,255,.55);font-family:inherit;font-size:.8rem;font-weight:300;cursor:pointer;transition:all .2s;letter-spacing:.1em}
-.sx.on{border-color:rgba(255,255,255,.5);color:rgba(255,255,255,.9);background:rgba(255,255,255,.05)}
-.go-btn{width:100%;margin-top:24px;padding:18px;background:#FFFFFF;color:#0C0C0C;border:none;border-radius:0;font-family:inherit;font-size:.85rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:opacity .15s;margin-bottom:40px}
-.go-btn:active{opacity:.85}
+@keyframes fade-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.06);opacity:.72}}
+.anim-in{opacity:0;animation:fade-in .7s ease-out forwards}
+.breathe{animation:breathe 6s ease-in-out infinite}
 
-/* ── RESULT BAR ── */
-.result-bar{display:flex;align-items:flex-start;padding:52px 24px 20px;gap:16px;border-bottom:1px solid rgba(255,255,255,.06)}
-.back-btn{width:36px;height:36px;flex-shrink:0;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:0;color:rgba(255,255,255,.6);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s;margin-top:2px}
-.back-btn:hover{border-color:rgba(255,255,255,.35)}
-.result-meta{flex:1}
-.result-title{font-family:'Hahmlet',serif;font-size:1.2rem;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
-.result-pills{display:flex;gap:6px;flex-wrap:wrap}
-.r-pill{padding:4px 10px;border:1px solid rgba(255,255,255,.12);font-size:.58rem;color:rgba(255,255,255,.45);letter-spacing:.08em}
+.scr{display:none}
+#I.on{display:block;height:100dvh;overflow:hidden;position:relative;background:#080808}
+#IN.on{display:flex;flex-direction:column;height:100dvh;overflow:hidden;background:#080808;position:relative}
+#R.on{display:block;height:100dvh;overflow-y:auto;position:relative;background:#080808}
 
-/* ── 만세력 ── */
-.manse-hdr{padding:11px 24px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);font-size:.58rem;letter-spacing:.28em;color:rgba(255,255,255,.45);text-transform:uppercase}
-.manse-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.mg-lbl{text-align:center;padding:10px 4px 8px;font-size:.52rem;color:rgba(255,255,255,.3);letter-spacing:.1em;border-right:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
-.mg-lbl:last-child{border-right:none}
-.mg-lbl.is-day{color:rgba(255,255,255,.55)}
-.mg-cell{text-align:center;padding:20px 4px 16px;border-right:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
-.mg-cell:last-child{border-right:none}
-.mg-cell.is-day{background:rgba(255,255,255,.025)}
-.mg-hanja{font-size:2.1rem;font-weight:700;font-family:'Hahmlet',serif;line-height:1}
-.mg-hangul{font-size:.5rem;color:rgba(255,255,255,.28);margin-top:6px;letter-spacing:.05em}
-.el-wood{background:rgba(74,222,128,.07)}
-.el-fire{background:rgba(248,113,113,.07)}
-.el-earth{background:rgba(251,191,36,.07)}
-.el-metal{background:rgba(147,197,253,.07)}
-.el-water{background:rgba(96,165,250,.07)}
-.manse-more{display:flex;justify-content:flex-end;padding:10px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
-.manse-more-btn{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em;background:none;border:none;cursor:pointer;padding:4px 0}
+.nav-btn{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12px;color:rgba(255,255,255,.28);
+  background:none;border:none;cursor:pointer;
+  letter-spacing:.12em;padding:0;
+  transition:color .2s;
+}
+.nav-btn:hover{color:rgba(255,255,255,.6)}
 
-/* ── 사주해설 ── */
-.haeseol-hdr{padding:11px 24px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);margin-top:20px;font-size:.58rem;letter-spacing:.28em;color:rgba(255,255,255,.45);text-transform:uppercase}
-.haeseol-hint{font-size:.65rem;color:rgba(255,255,255,.22);text-align:center;padding:13px 24px;letter-spacing:.04em;border-bottom:1px solid rgba(255,255,255,.06)}
+.next-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;
+  border:none;border-top:1px solid rgba(255,255,255,.1);
+  background:none;cursor:pointer;transition:all .3s;
+}
+.next-btn:hover .nb-text{color:rgba(255,255,255,1)!important}
+.next-btn:hover .nb-arr{color:rgba(255,255,255,.7)!important;transform:translateX(4px)}
+.nb-text{font-family:'Nanum Myeongjo',serif;font-size:18px;font-weight:300;color:rgba(255,255,255,.7);letter-spacing:-.01em;transition:color .3s}
+.nb-arr{color:rgba(255,255,255,.28);transition:all .3s;display:inline-block}
 
-/* ── ACCORDION ── */
-.acc-item{border-bottom:1px solid rgba(255,255,255,.06)}
-.acc-head{padding:18px 24px;cursor:pointer;transition:background .15s;user-select:none}
-.acc-head:active{background:rgba(255,255,255,.02)}
-.acc-label{font-size:.5rem;color:rgba(255,255,255,.28);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
-.acc-title-row{display:flex;align-items:flex-start;gap:10px}
-.acc-icon{font-size:.85rem;color:rgba(255,255,255,.4);flex-shrink:0;margin-top:3px;width:18px;text-align:center}
-.acc-title{flex:1;font-size:1.05rem;font-weight:700;font-family:'Hahmlet',serif;line-height:1.35;letter-spacing:-.01em}
-.acc-chev{font-size:.7rem;color:rgba(255,255,255,.3);flex-shrink:0;margin-top:5px}
-.acc-lock{font-size:.65rem;color:rgba(255,255,255,.18);flex-shrink:0;margin-top:5px}
-.acc-body{padding:4px 24px 22px 52px}
-.acc-text{font-size:.82rem;line-height:2.1;color:var(--g1);font-weight:300;white-space:pre-line;word-break:break-word}
-.acc-item.locked .acc-title{color:rgba(255,255,255,.4)}
-.acc-item.locked .acc-icon{color:rgba(255,255,255,.18)}
-
-/* Loading shimmer */
-.acc-loading{padding:8px 0}
-.acc-shimmer{height:76px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);animation:shimmer 1.6s ease-in-out infinite}
-.acc-shimmer:nth-child(2){animation-delay:.25s}
-.acc-shimmer:nth-child(3){animation-delay:.5s}
-@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
-.acc-loading-txt{font-size:.65rem;color:rgba(255,255,255,.25);text-align:center;padding:16px 24px;letter-spacing:.08em}
-.acc-err{padding:24px;font-size:.75rem;color:var(--fire);letter-spacing:.02em}
-
-/* Locked section title placeholder */
-.acc-title-blur{flex:1;font-size:.82rem;color:rgba(255,255,255,.12);letter-spacing:.35em;filter:blur(4px);pointer-events:none;overflow:hidden;white-space:nowrap}
-
-/* ── PAYWALL ── */
-.paywall-wrap{margin:0 24px 0;padding:28px 24px;border:1px solid rgba(255,255,255,.08);text-align:center}
-.paywall-lock{font-size:1.3rem;color:rgba(255,255,255,.35);margin-bottom:14px}
-.paywall-title{font-family:'Hahmlet',serif;font-size:1.25rem;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
-.paywall-desc{font-size:.7rem;color:rgba(255,255,255,.38);line-height:2.1;letter-spacing:.03em;margin-bottom:22px}
-.paywall-btn{width:100%;padding:16px;background:#FFFFFF;color:#0C0C0C;border:none;border-radius:0;font-family:inherit;font-size:.82rem;font-weight:700;letter-spacing:.1em;cursor:pointer;margin-bottom:10px;transition:opacity .15s}
-.paywall-btn:active{opacity:.85}
-.paywall-sub{font-size:.6rem;color:rgba(255,255,255,.22);letter-spacing:.08em}
-
-.bottom-pad{height:56px}
+.footer-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;
+  border:none;border-top:1px solid rgba(255,255,255,.07);
+  background:none;cursor:pointer;
+}
+.footer-btn:hover .fb-text{color:rgba(255,255,255,.65)!important}
+.footer-btn:hover .fb-arr{color:rgba(255,255,255,.5)!important;transform:translateX(4px)}
+.fb-text{font-family:'Nanum Myeongjo',serif;font-size:17px;font-weight:300;color:rgba(255,255,255,.32);letter-spacing:-.01em;transition:color .3s}
+.fb-arr{color:rgba(255,255,255,.18);transition:all .3s;display:inline-block}
 </style>
 </head>
 <body>
 
-<!-- HOME -->
-<div id="H" class="scr on">
-  <div class="home-top">
-    <div class="home-title"><span class="light">사주팔자</span>별이 기억한<br><span>운명</span></div>
-    <div class="home-sub">생년월일시로 보는 사주팔자<br>천년의 지혜가 오늘의 방향을 알려드립니다</div>
-  </div>
-  <div class="star-ring-wrap">
-    <div class="glow-orb-wrap">
-      <svg class="starburst" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="30" y1="2" x2="30" y2="58" stroke="white" stroke-width=".8" opacity=".6"/>
-        <line x1="2" y1="30" x2="58" y2="30" stroke="white" stroke-width=".8" opacity=".6"/>
-        <line x1="9" y1="9" x2="51" y2="51" stroke="white" stroke-width=".6" opacity=".4"/>
-        <line x1="51" y1="9" x2="9" y2="51" stroke="white" stroke-width=".6" opacity=".4"/>
-        <circle cx="30" cy="30" r="2.5" fill="white" opacity=".9"/>
-      </svg>
-      <div class="glow-halo"></div>
-      <div class="glow-mid"></div>
-      <div class="orbit-1"></div>
-      <div class="orbit-2"></div>
-      <div class="orbit-3"></div>
-      <div class="dark-sphere">
-        <div class="sphere-text-ko">자미원</div>
-        <div class="sphere-text-hj">紫微垣</div>
-      </div>
-      <svg class="four-star" viewBox="0 0 40 40" fill="none">
-        <path d="M20 2 L22 18 L38 20 L22 22 L20 38 L18 22 L2 20 L18 18 Z" fill="white" opacity=".85"/>
-      </svg>
+<!-- ── INTRO ────────────────────────────────────────────────────────────────── -->
+<div id="I" class="scr on">
+
+  <!-- Breathing warm light -->
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;top:-8%;pointer-events:none;z-index:0">
+    <div class="breathe" style="position:relative">
+      <div style="position:absolute;inset:-80px;background:radial-gradient(circle,rgba(210,195,155,.06) 0%,transparent 70%);border-radius:50%"></div>
+      <div style="width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 42% 40%,rgba(235,225,200,.82) 0%,rgba(200,180,130,.55) 22%,rgba(160,130,80,.25) 48%,rgba(80,60,30,.08) 70%,transparent 88%);filter:blur(38px)"></div>
     </div>
   </div>
-  <div class="form-wrap">
-    <div class="form-card">
-      <div class="two-col">
-        <div class="field"><label>생년월일</label><input type="date" id="bd" value="1990-01-01"></div>
-        <div class="field"><label>출생시간</label><input type="time" id="bt" value="12:00"></div>
-      </div>
-      <div class="field">
-        <label>성별</label>
-        <div class="sex-row">
-          <button class="sx on" id="mb" onclick="setSex('남')">남성</button>
-          <button class="sx" id="fb" onclick="setSex('여')">여성</button>
-        </div>
-      </div>
-      <button class="go-btn" onclick="calc()">사주 보기</button>
+
+  <!-- Top label -->
+  <div class="anim-in" style="position:absolute;top:56px;left:28px;right:28px;display:flex;justify-content:space-between;align-items:center;z-index:10;animation-delay:0ms">
+    <span class="ss" style="font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(210,195,160,.4)">사주명리</span>
+    <svg width="24" height="24" viewBox="0 0 40 40" fill="none" style="opacity:.28;flex-shrink:0">
+      <polygon points="20,1 21.4,17.2 38,20 21.4,22.8 20,39 18.6,22.8 2,20 18.6,17.2" fill="rgba(230,220,200,.9)"/>
+    </svg>
+  </div>
+
+  <!-- Title -->
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:0 28px;padding-top:12%;z-index:10">
+    <div class="anim-in" style="animation-delay:120ms">
+      <h1 class="sr" style="font-size:88px;font-weight:300;line-height:.82;letter-spacing:-.03em;color:#fff">사주</h1>
+      <h1 class="sr" style="font-size:88px;font-weight:300;line-height:.82;letter-spacing:-.03em;color:rgba(255,255,255,.12)">명리</h1>
+    </div>
+    <div class="anim-in" style="animation-delay:260ms;margin-top:32px">
+      <p class="ss" style="font-size:12px;line-height:1.8;color:rgba(210,200,175,.38)">
+        태어난 순간의 하늘,<br>당신의 운명을 읽다
+      </p>
     </div>
   </div>
-  <div class="bottom-pad"></div>
+
+  <!-- Bottom CTA -->
+  <div class="anim-in" style="position:absolute;bottom:56px;left:28px;right:28px;z-index:10;animation-delay:380ms">
+    <div style="height:1px;background:rgba(210,195,155,.12);margin-bottom:24px"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span class="ss" style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(210,195,155,.25)">Four Pillars of Destiny</span>
+      <button onclick="goInput()" style="display:flex;align-items:center;gap:12px;background:none;border:none;cursor:pointer;padding:0"
+        onmouseenter="this.querySelector('.i-txt').style.color='rgba(235,225,200,1)'"
+        onmouseleave="this.querySelector('.i-txt').style.color='rgba(220,208,180,.65)'">
+        <span class="sr i-txt" style="font-size:17px;font-weight:400;color:rgba(220,208,180,.65);transition:color .3s">시작하기</span>
+        <span style="color:rgba(210,195,155,.35)">→</span>
+      </button>
+    </div>
+  </div>
 </div>
 
-<!-- RESULT -->
-<div id="R" class="scr">
+
+<!-- ── INPUT ─────────────────────────────────────────────────────────────────── -->
+<div id="IN" class="scr">
+
+  <!-- Ambient orb -->
+  <div style="position:absolute;top:-12%;right:-20%;pointer-events:none;z-index:0">
+    <div style="width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 40% 38%,hsla(38,28%,88%,.35) 0%,hsla(38,20%,60%,.18) 28%,transparent 70%);filter:blur(40px)"></div>
+  </div>
+
   <!-- Header -->
-  <div class="result-bar">
-    <button class="back-btn" onclick="goH()">←</button>
-    <div class="result-meta">
-      <div class="result-title">사주해설</div>
-      <div class="result-pills" id="rpills"></div>
+  <div style="position:relative;z-index:10;padding:56px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <button class="nav-btn" onclick="goBack()">←</button>
+    <span class="ss" id="stepLabel" style="font-size:10px;letter-spacing:.28em;color:rgba(255,255,255,.22);text-transform:uppercase">1 / 3</span>
+  </div>
+
+  <!-- Step heading -->
+  <div id="stepHeading" style="position:relative;z-index:10;padding:32px 28px 36px;flex-shrink:0">
+    <span class="ss" id="stepSub" style="font-size:11px;font-weight:200;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase;display:block;margin-bottom:10px">태어난 해</span>
+    <h2 class="sr" id="stepTitle" style="font-size:44px;font-weight:400;color:#fff;line-height:1.1;letter-spacing:-.01em">연도를<br>선택하세요</h2>
+  </div>
+
+  <!-- Picker area -->
+  <div style="position:relative;z-index:10;flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden">
+    <!-- Step 0: year -->
+    <div id="spYear" style="width:100%;max-width:200px"></div>
+    <!-- Step 1: month + day -->
+    <div id="spMonthDay" style="width:100%;display:none;flex-direction:row;gap:16px">
+      <div id="spMonth" style="flex:1"></div>
+      <div id="spDay"   style="flex:1"></div>
     </div>
+    <!-- Step 2: hour -->
+    <div id="spHour" style="width:100%;max-width:280px;display:none"></div>
   </div>
 
-  <!-- 만세력 -->
-  <div class="manse-hdr">만세력</div>
-  <div class="manse-grid" id="mg"></div>
-  <div class="manse-more">
-    <button class="manse-more-btn">만세력 자세히 보기 &rsaquo;</button>
+  <!-- Next CTA -->
+  <div style="position:relative;z-index:10;padding:16px 28px 56px;flex-shrink:0">
+    <button id="nextBtn" class="next-btn" onclick="nextStep()">
+      <span class="nb-text" id="nextLabel">다음</span>
+      <span class="nb-arr">→</span>
+    </button>
   </div>
-
-  <!-- 사주해설 -->
-  <div class="haeseol-hdr">사주해설</div>
-  <div class="haeseol-hint">각 제목을 클릭하면 해설이 펼쳐져요</div>
-
-  <div id="accItems"></div>
-
-  <!-- Paywall -->
-  <div id="paywallWrap" style="display:none;padding:24px 0">
-    <div class="paywall-wrap">
-      <div class="paywall-lock">✦</div>
-      <div class="paywall-title">전체 분석 잠금해제</div>
-      <div class="paywall-desc">오행으로 보는 사주 · 일주와 십성<br>쓴소리 좀 할게 · 나만의 매력 · 나라는 사람<br>나에게 맞는 사람 · 머물면 좋은 곳 · 마지막 한마디</div>
-      <button class="paywall-btn">₩9,900 결제하고 전체 보기</button>
-      <div class="paywall-sub">결제 후 즉시 열람 가능</div>
-    </div>
-  </div>
-
-  <div class="bottom-pad"></div>
 </div>
+
+
+<!-- ── RESULT ─────────────────────────────────────────────────────────────────── -->
+<div id="R" class="scr">
+
+  <!-- Ambient orb (scrolls with content) -->
+  <div style="position:absolute;top:-15%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0">
+    <div class="breathe">
+      <div id="resultOrb" style="width:360px;height:360px;border-radius:50%;filter:blur(65px)"></div>
+    </div>
+  </div>
+
+  <div style="position:relative;z-index:1">
+
+    <!-- Nav -->
+    <div style="padding:56px 28px 0;display:flex;justify-content:space-between;align-items:center">
+      <button class="nav-btn" onclick="goIntro()">←</button>
+      <span class="ss" style="font-size:10px;letter-spacing:.28em;color:rgba(255,255,255,.22);text-transform:uppercase">사주 분석</span>
+    </div>
+
+    <!-- Headline -->
+    <div class="anim-in" style="padding:32px 28px 20px;animation-delay:0ms">
+      <span class="ss" id="rDate" style="font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.28);display:block;margin-bottom:10px"></span>
+      <h2 class="sr" style="font-size:50px;font-weight:400;color:#fff;line-height:1;letter-spacing:-.01em">당신의<br>사주 분석</h2>
+      <div style="margin-top:18px">
+        <span class="ss" id="elemBadge" style="font-size:11px;font-weight:300;padding:5px 12px"></span>
+      </div>
+    </div>
+
+    <!-- 4 Pillars -->
+    <div style="padding:0 28px 32px">
+      <div id="pillarsRow" style="display:flex;justify-content:space-between"></div>
+    </div>
+
+    <!-- Divider -->
+    <div style="margin:0 28px;height:1px;background:rgba(255,255,255,.05)"></div>
+
+    <!-- Analysis sections -->
+    <div id="analysisSections" style="padding:0 28px"></div>
+
+    <!-- Footer -->
+    <div style="padding:0 28px 64px">
+      <button class="footer-btn" onclick="goIntro()">
+        <span class="fb-text">처음으로</span>
+        <span class="fb-arr">→</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
 
 <script>
-const S=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
-const SK=['갑','을','병','정','무','기','경','신','임','계'];
-const B=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
-const BK=['자','축','인','묘','진','사','오','미','신','유','술','해'];
-const ELC=['var(--wood)','var(--fire)','var(--earth)','var(--metal)','var(--water)'];
-const ELCLS=['el-wood','el-fire','el-earth','el-metal','el-water'];
-const SE=[0,0,1,1,2,2,3,3,4,4],BE=[4,2,0,0,2,1,1,2,3,3,2,4];
+// ─── Saju constants ───────────────────────────────────────────────────────────
+const STEMS    = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸']
+const BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']
+const STEM_KR  = ['갑','을','병','정','무','기','경','신','임','계']
+const BR_KR    = ['자','축','인','묘','진','사','오','미','신','유','술','해']
+const HOURS_KR = [
+  '자시 · 23–01시','축시 · 01–03시','인시 · 03–05시','묘시 · 05–07시',
+  '진시 · 07–09시','사시 · 09–11시','오시 · 11–13시','미시 · 13–15시',
+  '신시 · 15–17시','유시 · 17–19시','술시 · 19–21시','해시 · 21–23시',
+]
+const ELEM_HUE  = [142, 0, 38, 210, 220]
+const STEM_ELEM = [0,0,1,1,2,2,3,3,4,4]
+const ELEM_NAME = ['목(木)','화(火)','토(土)','금(金)','수(水)']
 
-const SECTION_DEFS=[
-  {id:'summary',label:'한마디로',icon:'✦'},
-  {id:'ohaeng',label:'오행으로 보는 사주',icon:'◈'},
-  {id:'ilju',label:'일주와 십성',icon:'◉'},
-  {id:'critique',label:'쓴소리 좀 할게',icon:'✕'},
-  {id:'charm',label:'나만의 매력',icon:'♡'},
-  {id:'identity',label:'나라는 사람',icon:'◎'},
-  {id:'match',label:'나에게 맞는 사람',icon:'♥'},
-  {id:'place',label:'머물면 좋은 곳',icon:'◇'},
-  {id:'closing',label:'마지막 한마디',icon:'❝'},
-];
+const NOW = new Date().getFullYear()
 
-let sex='남';
+// ─── Picker items ─────────────────────────────────────────────────────────────
+const YEARS  = Array.from({length: NOW - 1899}, (_,i) => `${NOW - i}년`)
+const MONTHS = Array.from({length:12}, (_,i) => `${i+1}월`)
+const DAYS   = Array.from({length:31}, (_,i) => `${i+1}일`)
 
-function setSex(s){sex=s;document.getElementById('mb').classList.toggle('on',s==='남');document.getElementById('fb').classList.toggle('on',s==='여')}
-function goH(){document.getElementById('R').classList.remove('on');void document.getElementById('R').offsetWidth;document.getElementById('H').classList.add('on');window.scrollTo(0,0)}
-
-function jdn(y,m,d){const a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;return d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045}
-function yP(y,m,d){const sy=(m<2||(m===2&&d<4))?y-1:y;return{s:((sy-4)%10+10)%10,b:((sy-4)%12+12)%12}}
-function mP(m,ys){const mb=[1,2,3,4,5,6,7,8,9,10,11,0],bi=mb[m-1];return{s:([2,4,6,8,0,2,4,6,8,0][ys]+((bi-2+12)%12))%10,b:bi}}
-function dP(y,m,d){const idx=(jdn(y,m,d)+11)%60;return{s:idx%10,b:idx%12}}
-function hP(h,ds){const bi=h>=23?0:Math.floor((h+1)/2)%12;return{s:([0,2,4,6,8,0,2,4,6,8][ds]+bi)%10,b:bi}}
-
-function renderManseGrid(si,il,wol,yeon){
-  const pillars=[si,il,wol,yeon];
-  const labels=['시주','일주','월주','연주'];
-  let h='';
-  pillars.forEach((p,i)=>{h+=`<div class="mg-lbl${i===1?' is-day':''}">${labels[i]}</div>`});
-  pillars.forEach((p,i)=>{
-    const ei=SE[p.s];
-    h+=`<div class="mg-cell ${ELCLS[ei]}${i===1?' is-day':''}"><div class="mg-hanja" style="color:${ELC[ei]}">${S[p.s]}</div><div class="mg-hangul">${SK[p.s]}</div></div>`;
-  });
-  pillars.forEach((p,i)=>{
-    const ei=BE[p.b];
-    h+=`<div class="mg-cell ${ELCLS[ei]}${i===1?' is-day':''}"><div class="mg-hanja" style="color:${ELC[ei]}">${B[p.b]}</div><div class="mg-hangul">${BK[p.b]}</div></div>`;
-  });
-  document.getElementById('mg').innerHTML=h;
+// ─── Calc ─────────────────────────────────────────────────────────────────────
+function stemBranch(y) {
+  return { s:((y-4)%10+10)%10, b:((y-4)%12+12)%12 }
+}
+function monthPillar(y, m) {
+  const ys = ((y-4)%10+10)%10
+  return { s:((ys%5)*2+m-1)%10, b:(m+1)%12 }
+}
+function dayPillar(y, m, d) {
+  const a = Math.floor((14-m)/12)
+  const yy = y-a, mm = m+12*a-2
+  const jd = d + Math.floor((153*mm+2)/5) + 365*yy +
+             Math.floor(yy/4) - Math.floor(yy/100) + Math.floor(yy/400) - 32045
+  return { s:((jd+9)%10+10)%10, b:((jd+1)%12+12)%12 }
+}
+function hourPillar(ds, hb) {
+  return { s:((ds%5)*2+hb)%10, b:hb }
 }
 
-function renderLockedSections(){
-  let h='';
-  SECTION_DEFS.forEach(def=>{
-    h+=`<div class="acc-item locked">
-      <div class="acc-head" onclick="scrollToPaywall()">
-        <div class="acc-label">${def.label}</div>
-        <div class="acc-title-row">
-          <span class="acc-icon">${def.icon}</span>
-          <div class="acc-title-blur">●●●●●●●●●●●●●●●●●●●●●</div>
-          <span class="acc-lock">✦</span>
-        </div>
+// ─── ScrollPicker ─────────────────────────────────────────────────────────────
+function createScrollPicker(container, items, init, onChange) {
+  const IH = 52, VIS = 5, PAD = 2
+  container.innerHTML = ''
+
+  const wrap = document.createElement('div')
+  wrap.style.cssText = 'position:relative'
+
+  // Fade overlays
+  ;[['top:0;background:linear-gradient(to bottom,#080808,transparent)', PAD],
+    ['bottom:0;background:linear-gradient(to top,#080808,transparent)', PAD]
+  ].forEach(([s, p]) => {
+    const d = document.createElement('div')
+    d.style.cssText = `position:absolute;${s};left:0;right:0;height:${IH*p}px;z-index:10;pointer-events:none`
+    wrap.appendChild(d)
+  })
+
+  // Center highlight
+  const hl = document.createElement('div')
+  hl.style.cssText = `position:absolute;top:${IH*PAD}px;left:0;right:0;height:${IH}px;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);z-index:10;pointer-events:none`
+  wrap.appendChild(hl)
+
+  // Scroll container
+  const sc = document.createElement('div')
+  sc.style.cssText = `height:${IH*VIS}px;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch`
+  wrap.appendChild(sc)
+  container.appendChild(wrap)
+
+  let cur = init
+  const spans = []
+
+  // Padding top
+  for (let i=0;i<PAD;i++) {
+    const d=document.createElement('div'); d.style.height=IH+'px'; sc.appendChild(d)
+  }
+
+  // Items
+  items.forEach((item, i) => {
+    const d=document.createElement('div')
+    d.style.cssText = `height:${IH}px;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;cursor:pointer`
+    const sp=document.createElement('span')
+    sp.className='sr'
+    sp.textContent=item
+    sp.style.cssText='transition:all .2s;letter-spacing:-.01em'
+    styleSp(sp,i,cur)
+    d.appendChild(sp)
+    d.addEventListener('click',()=>{ cur=i; sc.scrollTo({top:i*IH,behavior:'smooth'}); refresh(); onChange(i) })
+    sc.appendChild(d)
+    spans.push(sp)
+  })
+
+  // Padding bottom
+  for (let i=0;i<PAD;i++) {
+    const d=document.createElement('div'); d.style.height=IH+'px'; sc.appendChild(d)
+  }
+
+  setTimeout(()=>{ sc.scrollTop=cur*IH }, 0)
+
+  function styleSp(s,i,a){
+    s.style.fontSize=(i===a?22:15)+'px'
+    s.style.fontWeight=i===a?'300':'200'
+    s.style.color=i===a?'rgba(255,255,255,.88)':'rgba(255,255,255,.22)'
+  }
+  function refresh(){ spans.forEach((s,i)=>styleSp(s,i,cur)) }
+
+  sc.addEventListener('scroll',()=>{
+    const idx=Math.max(0,Math.min(items.length-1,Math.round(sc.scrollTop/IH)))
+    if(idx!==cur){ cur=idx; refresh(); onChange(idx) }
+  })
+
+  return { getValue:()=>cur }
+}
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let step=0
+let pYear, pMonth, pDay, pHour
+
+function initPickers() {
+  const defYear = YEARS.indexOf(`${NOW-36}`) !== -1 ? YEARS.indexOf(`${NOW-36}년`) : 36
+  pYear  = createScrollPicker(document.getElementById('spYear'),    YEARS,    Math.max(0,defYear), ()=>{})
+  pMonth = createScrollPicker(document.getElementById('spMonth'),   MONTHS,   0, ()=>{})
+  pDay   = createScrollPicker(document.getElementById('spDay'),     DAYS,     0, ()=>{})
+  pHour  = createScrollPicker(document.getElementById('spHour'),    HOURS_KR, 6, ()=>{})
+}
+
+// ─── Screen management ────────────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'))
+  const el = document.getElementById(id)
+  el.classList.add('on')
+  el.scrollTop = 0
+}
+
+function goInput() {
+  step=0
+  show('IN')
+  initPickers()
+  updateStep()
+}
+
+function goBack() {
+  if (step>0) { step--; updateStep() }
+  else show('I')
+}
+
+function goIntro() { show('I') }
+
+const STEPS = [
+  { lbl:'태어난 해',   title:'연도를\n선택하세요',   show0:true,  show12:false, show3:false },
+  { lbl:'태어난 월·일', title:'월과 일을\n선택하세요', show0:false, show12:true,  show3:false },
+  { lbl:'태어난 시간', title:'시간을\n선택하세요',   show0:false, show12:false, show3:true  },
+]
+
+function updateStep() {
+  const d = STEPS[step]
+  document.getElementById('stepLabel').textContent   = `${step+1} / 3`
+  document.getElementById('stepSub').textContent     = d.lbl
+  document.getElementById('stepTitle').innerHTML     = d.title.replace('\n','<br>')
+  document.getElementById('nextLabel').textContent   = step<2 ? '다음' : '명리 보기'
+
+  document.getElementById('spYear').style.display    = d.show0  ? 'block' : 'none'
+  document.getElementById('spMonthDay').style.display= d.show12 ? 'flex'  : 'none'
+  document.getElementById('spHour').style.display    = d.show3  ? 'block' : 'none'
+
+  // Animate heading
+  const h=document.getElementById('stepHeading')
+  h.style.cssText='position:relative;z-index:10;padding:32px 28px 36px;flex-shrink:0;opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease'
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      h.style.opacity='1'; h.style.transform='none'
+    })
+  })
+}
+
+function nextStep() {
+  if (step<2) { step++; updateStep() }
+  else calcAndShow()
+}
+
+// ─── Analysis content ─────────────────────────────────────────────────────────
+const SECTIONS = [
+  {
+    ko:'성격', tag:'타고난 기질',
+    body:'강한 의지와 섬세한 감성이 공존합니다. 겉으로는 차분해 보이지만 내면에는 깊은 열정이 흐르며, 한 번 목표를 세우면 쉽게 포기하지 않는 집요함이 있습니다. 다만 지나친 완벽주의가 스스로를 지치게 만들 수 있으니 유의하세요.'
+  },
+  {
+    ko:'직업·재물', tag:'일과 돈의 흐름',
+    body:'창의성과 실행력이 함께 갖춰진 사주입니다. 조직보다는 자신의 능력을 발휘할 수 있는 환경에서 진가를 드러냅니다. 재물운은 꾸준히 쌓이는 형태로, 급작스러운 횡재보다는 성실한 노력이 부를 만드는 구조입니다.'
+  },
+  {
+    ko:'건강', tag:'몸과 기운의 균형',
+    body:'수 기운이 강해 신장과 방광 기능에 주의가 필요합니다. 정신적 스트레스가 신체로 직결되는 체질이므로 규칙적인 수면과 휴식이 매우 중요합니다. 명상이나 가벼운 유산소 운동이 균형을 잡는 데 효과적입니다.'
+  },
+  {
+    ko:'관계·인연', tag:'사람과의 연결',
+    body:'깊은 신뢰를 쌓은 소수의 관계를 소중히 여기는 성향입니다. 처음에는 경계가 높지만, 한번 마음을 연 사람에게는 헌신적입니다. 이성 인연은 예상치 못한 순간에 강렬하게 찾아오는 운명적 형태를 띱니다.'
+  },
+  {
+    ko:'올해의 운', tag:`${NOW}년 운세`,
+    body:'변화와 성장의 에너지가 강하게 흐르는 한 해입니다. 상반기에는 내면을 다지고 계획을 세우는 시기이며, 하반기부터 그 결실이 서서히 드러납니다. 새로운 시작에 용기를 내되, 충동적인 결정은 삼가는 것이 좋습니다.'
+  },
+]
+
+// ─── Result render ────────────────────────────────────────────────────────────
+function calcAndShow() {
+  const yi = pYear.getValue()
+  const mi = pMonth.getValue()
+  const di = pDay.getValue()
+  const hi = pHour.getValue()
+
+  const year  = NOW - yi
+  const month = mi + 1
+  const day   = di + 1
+
+  const yp = stemBranch(year)
+  const mp = monthPillar(year, month)
+  const dp = dayPillar(year, month, day)
+  const hp = hourPillar(dp.s, hi)
+  const pillars = [yp, mp, dp, hp]
+  const labels  = ['년주','월주','일주','시주']
+
+  // Dominant element
+  const tally=[0,0,0,0,0]
+  pillars.forEach(p=>tally[STEM_ELEM[p.s]]++)
+  const dom = tally.indexOf(Math.max(...tally))
+  const hue = ELEM_HUE[dom]
+
+  // Date label
+  document.getElementById('rDate').textContent =
+    `${year}년 ${month}월 ${day}일 · ${HOURS_KR[hi]}`
+
+  // Element badge
+  const badge = document.getElementById('elemBadge')
+  badge.textContent  = `${ELEM_NAME[dom]} 기운 우세`
+  badge.style.color  = `hsl(${hue},55%,70%)`
+  badge.style.border = `1px solid hsl(${hue},30%,28%)`
+  badge.style.background = `hsl(${hue},20%,9%)`
+
+  // Orb
+  document.getElementById('resultOrb').style.background =
+    `radial-gradient(circle at 40% 38%,hsla(${hue},28%,88%,.5) 0%,hsla(${hue},20%,60%,.28) 28%,hsla(${hue},12%,24%,.09) 60%,transparent 80%)`
+
+  // Pillars
+  const pr = document.getElementById('pillarsRow')
+  pr.innerHTML = ''
+  pillars.forEach((p,i) => {
+    const sh = ELEM_HUE[STEM_ELEM[p.s]]
+    const col = document.createElement('div')
+    col.className='anim-in'
+    col.style.cssText=`display:flex;flex-direction:column;align-items:center;gap:8px;animation-delay:${100+i*60}ms;opacity:0`
+    col.innerHTML=`
+      <span class="ss" style="font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.22)">${labels[i]}</span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+        <span class="sr" style="font-size:32px;font-weight:400;line-height:1;color:hsl(${sh},50%,68%)">${STEMS[p.s]}</span>
+        <span class="ss" style="font-size:9px;color:rgba(255,255,255,.25)">${STEM_KR[p.s]}</span>
       </div>
-    </div>`;
-  });
-  document.getElementById('accItems').innerHTML=h;
-  document.getElementById('paywallWrap').style.display='block';
-}
+      <div style="width:1px;height:14px;background:rgba(255,255,255,.08)"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+        <span class="sr" style="font-size:32px;font-weight:400;line-height:1;color:rgba(255,255,255,.6)">${BRANCHES[p.b]}</span>
+        <span class="ss" style="font-size:9px;color:rgba(255,255,255,.25)">${BR_KR[p.b]}</span>
+      </div>
+    `
+    pr.appendChild(col)
+  })
 
-function scrollToPaywall(){
-  document.getElementById('paywallWrap').scrollIntoView({behavior:'smooth',block:'center'});
-}
+  // Sections
+  const as = document.getElementById('analysisSections')
+  as.innerHTML = ''
+  SECTIONS.forEach((s,i) => {
+    const div=document.createElement('div')
+    div.className='anim-in'
+    div.style.cssText=`animation-delay:${320+i*90}ms;opacity:0`
+    div.innerHTML=`
+      <div style="display:flex;flex-direction:column;gap:10px;padding:28px 0;${i<SECTIONS.length-1?'border-bottom:1px solid rgba(255,255,255,.05)':''}">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+          <span class="sr" style="font-size:17px;font-weight:700;color:rgba(255,255,255,.85);flex-shrink:0">${s.ko}</span>
+          <span class="ss" style="font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.22);text-align:right">${s.tag}</span>
+        </div>
+        <p class="ss" style="font-size:13px;font-weight:300;color:rgba(255,255,255,.42);line-height:1.95">${s.body}</p>
+      </div>
+    `
+    as.appendChild(div)
+  })
 
-function calc(){
-  const dv=document.getElementById('bd').value,tv=document.getElementById('bt').value;
-  if(!dv)return;
-  const[y,m,d]=dv.split('-').map(Number),[h]=tv.split(':').map(Number);
-  const a=yP(y,m,d),b=mP(m,a.s),c=dP(y,m,d),e=hP(h,c.s);
-
-  document.getElementById('rpills').innerHTML=
-    `<span class="r-pill">${y}년 ${String(m).padStart(2,'0')}월 ${String(d).padStart(2,'0')}일</span>`+
-    `<span class="r-pill">양력</span>`+
-    `<span class="r-pill">${h}시</span>`+
-    `<span class="r-pill">${sex}성</span>`;
-
-  renderManseGrid(e,c,b,a);
-  renderLockedSections();
-
-  document.getElementById('H').classList.remove('on');
-  void document.getElementById('R').offsetWidth;
-  document.getElementById('R').classList.add('on');
-  window.scrollTo(0,0);
+  show('R')
 }
 </script>
 </body>
